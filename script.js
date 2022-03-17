@@ -40,3 +40,5 @@ var latestPosts = baseUrl + encodeURIComponent("https://vegamovies.nl/wp-json/wp
 // }
 
 
+// String baseUrl = "https://thawing-scrubland-27252.herokuapp.com/api?uri=https://vegamovies.nl/wp-json/wp/v2/posts?_embed";
+//       "https://thawing-scrubland-27252.herokuapp.com/api?uri=https://vegamovies.nl/wp-json/wp/v2/posts?_embed&categories=2";
