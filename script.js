@@ -32,5 +32,7 @@ function getCategoryUri(catid){
 var latestPosts = baseUrl + encodeURIComponent("https://vegamovies.nl/wp-json/wp/v2/posts?_embed");
 
 async function getLatestPosts(){
-    return await makeRequest("GET", url);
+    return await makeRequest("GET", latestPosts);
 }
+
+
