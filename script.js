@@ -7,7 +7,7 @@ function makeRequest(method, url) {
                 resolve({
                     status: this.status,
                     statusText: xhr.statusText,
-                    resp:xhr.responseText
+                    responseText:xhr.responseText
                 });
             } else {
                 reject({

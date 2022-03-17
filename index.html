@@ -37,7 +37,32 @@
 
       <script>
        makeRequest("GET", latestPosts).then(response => {
-           
+        
+        if (response.status == 200) {
+       console.log(response.responseText);
+       
+      var obj = JSON.parse(response.responseText);
+
+      console.log(obj);
+      
+    //  obj.forEach((i) => { 
+
+    //     console.log(i);
+
+    //     res = res + `
+    //        <tr>
+    // <td>${i.course_name}</td>
+    // <td><a class="waves-effect waves-light btn" href="./course.html?id=${i.id}">OPEN THIS</a></td>
+    //     </tr>
+    //             `;
+
+    //   } );
+
+
+    //   maintable.innerHTML = res
+     }
+
+
        });
       
       </script>
