@@ -24,6 +24,20 @@
         
 <H3>Latest Posts.</H3>
 
+<div class="preloader-wrapper big active" id="Loader">
+    <div class="spinner-layer spinner-blue-only">
+      <div class="circle-clipper left">
+        <div class="circle"></div>
+      </div><div class="gap-patch">
+        <div class="circle"></div>
+      </div><div class="circle-clipper right">
+        <div class="circle"></div>
+      </div>
+    </div>
+  </div>
+
+
+
 <div id="content">
 
 </div>
@@ -44,6 +58,9 @@
       var obj = JSON.parse(response.responseText);
 
       console.log(obj);
+
+      document.getElementById("Loader").style = "display:none";
+
       
     //  obj.forEach((i) => { 
 
