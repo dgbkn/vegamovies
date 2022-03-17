@@ -42,7 +42,7 @@
 
 
 
-<div id="content">
+<div id="content" class="row">
 
 </div>
 
@@ -66,21 +66,35 @@
       document.getElementById("Loader").style = "display:none";
 
       
-    //  obj.forEach((i) => { 
+     obj.forEach((i) => { 
 
-    //     console.log(i);
+        // console.log(i);
 
-    //     res = res + `
-    //        <tr>
-    // <td>${i.course_name}</td>
-    // <td><a class="waves-effect waves-light btn" href="./course.html?id=${i.id}">OPEN THIS</a></td>
-    //     </tr>
-    //             `;
+        res = res + `
+        
+        <div class="col s12 m7">
+      <div class="card">
+        <div class="card-image">
+          <img src="${i["_embedded"]}">
+          <span class="card-title">${i['title']['rendered']}</span>
+        </div>
+        <div class="card-content">
+          <p>${i['content']['rendered']}.</p>
+        </div>
+        <div class="card-action">
+          <a href="./openpost.html?id=${i.id}">Open</a>
+        </div>
+      </div>
+    </div>
 
-    //   } );
+
+                `;
+
+      } );
 
 
-    //   maintable.innerHTML = res
+      document.getElementById('content').innerHTML = res;
+
      }
 
 
