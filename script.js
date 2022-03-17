@@ -4,7 +4,11 @@ function makeRequest(method, url) {
         xhr.open(method, url);
         xhr.onload = function () {
             if (this.status >= 200 && this.status < 300) {
-                resolve(xhr.response);
+                resolve({
+                    status: this.status,
+                    statusText: xhr.statusText,
+                    resp:xhr.responseText
+                });
             } else {
                 reject({
                     status: this.status,
