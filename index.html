@@ -83,7 +83,7 @@
         obj.forEach((i) => {
 
           var content = i['content']['rendered'];
-          // content = content.replace("https://i.imgur.com/", "https://thawning.tanishagoyal.repl.co/api?uri=https://i.imgur.com/");
+          content = content.replace(`<img`, `<img loading="lazy"`);
 
           // console.log(i);
 
@@ -169,7 +169,7 @@
                 var img = "https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500";
               }
 
-              // content = content.replace("https://i.imgur.com/", "https://thawning.tanishagoyal.repl.co/api?uri=https://i.imgur.com/");
+             content = content.replace(`<img`, `<img loading="lazy"`);
 
               // console.log(i);
 
