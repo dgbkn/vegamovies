@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <title>
+    VegaMovies
+  </title>
+  <!--Import Google Icon Font-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!--Import materialize.css-->
+
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+
+  <!--Let browser know website is optimized for mobile-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+
+<body class="container">
+
+  <nav>
+    <div class="nav-wrapper">
+      <a href="#" class="brand-logo center">VegaMovies</a>
+
+    </div>
+  </nav>
+
+  <H3>Latest Posts.</H3>
+
+  <div class="preloader-wrapper big active" id="Loader">
+    <div class="spinner-layer spinner-blue-only">
+      <div class="circle-clipper left">
+        <div class="circle"></div>
+      </div>
+      <div class="gap-patch">
+        <div class="circle"></div>
+      </div>
+      <div class="circle-clipper right">
+        <div class="circle"></div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div id="content" class="row">
+
+  </div>
+
+  
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+  
+  <script>
+    // Or with jQuery
+
+ $(document).ready(function(){
+   $('.modal').modal();
+ });
+         
+ </script>
+
+  <!--JavaScript at end of body for optimized loading-->
+  <script src="./script.js"></script>
+
+  <script>
+    
+    makeRequest("GET", latestPosts).then(response => {
+
+      if (response.status == 200) {
+        console.log(response.responseText);
+
+        var obj = JSON.parse(response.responseText);
+
+        console.log(obj);
+
+        document.getElementById("Loader").style = "display:none";
+        var res = "";
+
+        obj.forEach((i) => {
+
+          // console.log(i);
+
+          res = res + `
+        
+          <!-- Modal Structure -->
+  <div id="modal${i.id}" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <h4>${i['title']['rendered']}</h4>
+      <div>${i['content']['rendered']}</div>
+      
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+    </div>
+  </div>
+          
+  
+        <div class="col s12 m6 l4">
+      <div class="card">
+        <div class="card-image">
+          <img src="${i["_embedded"]["wp:featuredmedia"][0]["source_url"] ? i["_embedded"]["wp:featuredmedia"][0]["source_url"] : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiOt7cL9kYA5dssSgygu-Jn72WOyO7Rjvxmg&usqp=CAU"}" class="superimg">
+          <span class="card-title" style="background: rgba(0,0,0,0.8);">${i['title']['rendered']}</span>
+        </div>
+        <div class="card-content">
+          <div>${getWordStr(i['content']['rendered'])}...</div>
+         </div>
+        <div class="card-action">
+          <!-- Modal Trigger -->
+  <a class="waves-effect waves-light btn modal-trigger" data-target="modal${i.id}" >OPEN</a>
+        </div>
+      </div>
+    </div>
+
+
+                `;
+
+        });
+
+
+        document.getElementById('content').innerHTML = res;
+
+      }
+
+
+    });
+
+
+  
+
+  </script>
+
+</body>
+
+</html>

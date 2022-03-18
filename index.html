@@ -1,105 +1,232 @@
 <!DOCTYPE html>
-  <html>
-    <head>
+<html lang="en">
 
-        <title>
-            VegaMovies
-        </title>
-      <!--Import Google Icon Font-->
-      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-      <!--Import materialize.css-->
-      
-    <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <title>Vegamovies</title>
+  <!-- MDB icon -->
+  <link rel="icon" href="img/mdb-favicon.ico" type="image/x-icon" />
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <!-- Google Fonts Roboto -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" />
+  <!-- MDB -->
+  <link rel="stylesheet" href="css/mdb.min.css" />
+</head>
 
-    
-      <!--Let browser know website is optimized for mobile-->
-      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
+<body>
 
-    <body class="container">
 
-  <nav>
-    <div class="nav-wrapper">
-      <a href="#" class="brand-logo center">VegaMovies</a>
-    
+
+  <nav class="navbar navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand">Vegamovies</a>
+
+      <div class="input-group d-flex w-auto">
+        <div class="form-outline">
+          <input type="search" id="form1" class="form-control" />
+          <label class="form-label" for="form1">Search</label>
+        </div>
+        <button type="button" class="btn btn-primary" onclick="doSearch()">
+          <i class="fas fa-search"></i>
+        </button>
+      </div>
+
+
     </div>
   </nav>
-        
-<H3>Latest Posts.</H3>
 
-<div class="preloader-wrapper big active" id="Loader">
-    <div class="spinner-layer spinner-blue-only">
-      <div class="circle-clipper left">
-        <div class="circle"></div>
-      </div><div class="gap-patch">
-        <div class="circle"></div>
-      </div><div class="circle-clipper right">
-        <div class="circle"></div>
-      </div>
+
+
+  <div class="d-flex justify-content-center" id="Loader">
+    <div class="spinner-border m-5 text-primary" style="width: 3rem; height: 3rem;" role="status">
+      <span class="visually-hidden">Loading...</span>
     </div>
   </div>
 
 
 
-<div id="content" class="row">
-
-</div>
 
 
-<!-- Compiled and minified JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
-      <!--JavaScript at end of body for optimized loading-->
-      <script src="./script.js"></script>
 
-      <script>
-       makeRequest("GET", latestPosts).then(response => {
+  <!-- Start your project here-->
+  <div class="container row  w-auto" id="mainContent">
+
+  </div>
+  <!-- End your project here-->
+
+
+
+
+
+  <!-- MDB -->
+  <script type="text/javascript" src="js/mdb.min.js"></script>
+  <script type="text/javascript" src="./script.js"></script>
+  <!-- Custom scripts -->
+  <script type="text/javascript">
+
+    makeRequest("GET", latestPosts).then(response => {
+
+      if (response.status == 200) {
+        console.log(response.responseText);
+
+        var obj = JSON.parse(response.responseText);
+
+        console.log(obj);
+
+        document.getElementById("Loader").style = "display:none!important";
+        var res = "";
+
+        obj.forEach((i) => {
+
+          var content = i['content']['rendered'];
+          // content = content.replace("https://i.imgur.com/", "https://thawning.tanishagoyal.repl.co/api?uri=https://i.imgur.com/");
+
+          // console.log(i);
+
+          res = res + `
         
-        if (response.status == 200) {
-       console.log(response.responseText);
-       
-      var obj = JSON.parse(response.responseText);
-
-      console.log(obj);
-
-      document.getElementById("Loader").style = "display:none";
-var res = "";
-      
-     obj.forEach((i) => { 
-
-        // console.log(i);
-
-        res = res + `
-        
-        <div class="col s12 m7">
-      <div class="card">
-        <div class="card-image">
-          <img src="${i["_embedded"]}">
-          <span class="card-title">${i['title']['rendered']}</span>
-        </div>
-        <div class="card-content">
-          <p>${i['content']['rendered']}.</p>
-        </div>
-        <div class="card-action">
-          <a href="./openpost.html?id=${i.id}">Open</a>
-        </div>
+  
+<!-- Modal -->
+<div class="modal fade" id="modal${i.id}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content bg-dark text-white">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">${i['title']['rendered']}</h5>
+        <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">${content}</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
       </div>
     </div>
+  </div>
+</div>
+          
+
+  <div class="col-lg-3 col-md-6 col-sm-12 ">
+    <div class="card">
+  <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+    <img src="${i["_embedded"]["wp:featuredmedia"][0]["source_url"] ? i["_embedded"]["wp:featuredmedia"][0]["source_url"] : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiOt7cL9kYA5dssSgygu-Jn72WOyO7Rjvxmg&usqp=CAU"}" class="img-fluid"/>
+    <a href="#!">
+      <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+    </a>
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">${i['title']['rendered']}</h5>
+    <button class="btn btn-primary" data-mdb-toggle="modal" data-mdb-target="#modal${i.id}">OPEN</button>
+  </div>
+</div>
+</div>
+  `;
+
+        });
 
 
-                `;
+        document.getElementById('mainContent').innerHTML = res;
 
-      } );
-
-
-      document.getElementById('content').innerHTML = res;
-
-     }
+      }
 
 
-       });
-      
-      </script>
-    </body>
-  </html>
+    });
+
+
+
+
+
+    function doSearch() {
+
+      if (document.getElementById('form1').value) {
+
+        document.getElementById('mainContent').innerHTML = ``;
+
+        document.getElementById("Loader").style = "";
+
+        var url = getSearchurl(document.getElementById('form1').value);
+
+        makeRequest("GET", url).then(response => {
+
+          if (response.status == 200) {
+            console.log(response.responseText);
+
+            var obj = JSON.parse(response.responseText);
+
+            console.log(obj);
+
+            document.getElementById("Loader").style = "display:none!important";
+            var res = "";
+
+            obj.forEach((i) => {
+
+              var content = i['content']['rendered'];
+              if(Array.isArray(i["_embedded"]["wp:featuredmedia"])){
+                var img = i["_embedded"]["wp:featuredmedia"][0]["source_url"];
+              }
+              else{
+                var img = "https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500";
+              }
+
+              // content = content.replace("https://i.imgur.com/", "https://thawning.tanishagoyal.repl.co/api?uri=https://i.imgur.com/");
+
+              // console.log(i);
+
+              res = res + `
+  
+
+<!-- Modal -->
+<div class="modal fade" id="modal${i.id}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-xl">
+<div class="modal-content bg-dark text-white">
+<div class="modal-header">
+  <h5 class="modal-title" id="exampleModalLabel">${i['title']['rendered']}</h5>
+  <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body">${content}</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
+</div>
+</div>
+</div>
+</div>
+    
+
+<div class="col-lg-3 col-md-6 col-sm-12 ">
+<div class="card">
+<div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+<img src="${img}" class="img-fluid"/>
+<a href="#!">
+<div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+</a>
+</div>
+<div class="card-body">
+<h5 class="card-title">${i['title']['rendered']}</h5>
+<button class="btn btn-primary" data-mdb-toggle="modal" data-mdb-target="#modal${i.id}">OPEN</button>
+</div>
+</div>
+</div>
+`;
+
+            });
+
+
+            document.getElementById('mainContent').innerHTML = res;
+
+          }
+
+
+        });
+
+
+
+      }
+    }
+
+
+
+  </script>
+</body>
+
+</html>

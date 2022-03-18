@@ -26,14 +26,24 @@ function makeRequest(method, url) {
     });
 }
 
+function getWordStr(str) {
+    return str.split(/\s+/).slice(0,10).join(" ");
+}
 
-var baseUrl = "https://thawing-scrubland-27252.herokuapp.com/api?uri=";
+
+var baseUrl = "https://thawning.tanishagoyal.repl.co/api?uri=";
 
 function getCategoryUri(catid){
     return(baseUrl + encodeURIComponent("https://vegamovies.nl/wp-json/wp/v2/posts?_embed&categories="+catid));
 }
 
-var latestPosts = baseUrl + encodeURIComponent("https://vegamovies.nl/wp-json/wp/v2/posts?_embed");
+
+function getSearchurl(query){
+    // return `${baseUrl + encodeURIComponent(`https://vegamovies.nl/wp-json/wp/v2/search?_embed&search=${query}&per_page=10`) }`;
+    return `${baseUrl + encodeURIComponent(`https://vegamovies.nl/wp-json/wp/v2/posts?_embed&search=${query}&per_page=70`) }`;
+}
+
+var latestPosts = baseUrl + encodeURIComponent("https://vegamovies.nl/wp-json/wp/v2/posts?_embed=1&per_page=50");
 
 // async function getLatestPosts(){
 //     return makeRequest("GET", latestPosts);
@@ -41,3 +51,10 @@ var latestPosts = baseUrl + encodeURIComponent("https://vegamovies.nl/wp-json/wp
 
 
 // https://vegamovies.wiki/wp-json/wp/v2/posts?per_page=50
+
+
+
+
+
+
+
