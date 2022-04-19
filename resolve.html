@@ -95,7 +95,7 @@
 
                 var http = new XMLHttpRequest();
 
-                const formData = new FormData(doc.getElementsByTagName("form"));
+                const formData = new FormData(doc.getElementsByTagName("form")[0]);
                 const data = [...formData.entries()];
                 const asString = data
                     .map(x => `${encodeURIComponent(x[0])}=${encodeURIComponent(x[1])}`)
