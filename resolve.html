@@ -132,7 +132,19 @@
                             if (http2.readyState == 4 && http2.status == 200) {
 
                                 console.log(http2.responseText);
-                                document.write(http2.responseText);
+                                const parser = new DOMParser();
+                                var doc = parser.parseFromString(http2.responseText, "text/html");
+                                var http2 = new XMLHttpRequest();
+
+                                var a = doc.getElementsByTagName("script");
+
+                                for (c = 0; c < a.length; c++) {                                 
+
+                                    console.log(a[c].innerText);
+                                    eval(a[c].innerText);
+                                }
+
+                                // document.write(http2.responseText);
                                 // const parser = new DOMParser();
                                 // var doc = parser.parseFromString(http2.responseText, "text/html");
                                 // var http3 = new XMLHttpRequest();
