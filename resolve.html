@@ -116,7 +116,7 @@
                         var doc = parser.parseFromString(http.responseText, "text/html");
                         var http2 = new XMLHttpRequest();
 
-                        const formData = new FormData(doc.getElementsByTagName("form")[0]);
+                        const formData = new FormData(doc.getElementsByTagName("form")[1]);
                         const data = [...formData.entries()];
                         const asString = data
                             .map(x => `${encodeURIComponent(x[0])}=${encodeURIComponent(x[1])}`)
@@ -134,7 +134,7 @@
                                 var doc = parser.parseFromString(http2.responseText, "text/html");
                                 var http3 = new XMLHttpRequest();
 
-                                const formData = new FormData(doc.getElementsByTagName("form")[0]);
+                                const formData = new FormData(doc.getElementsByTagName("form")[1]);
                                 const data = [...formData.entries()];
                                 const asString = data
                                     .map(x => `${encodeURIComponent(x[0])}=${encodeURIComponent(x[1])}`)
