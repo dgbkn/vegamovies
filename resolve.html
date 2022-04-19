@@ -1,0 +1,38 @@
+<script type="text/javascript">
+        var url = new URL(window.location.href);
+
+
+        function makeRequest(method, url) {
+            return new Promise(function (resolve, reject) {
+                let xhr = new XMLHttpRequest();
+                xhr.open(method, url);
+                xhr.onload = function () {
+                    if (this.status >= 200 && this.status < 300) {
+                        resolve({
+                            status: this.status,
+                            statusText: xhr.statusText,
+                            responseText: xhr.responseText
+                        });
+                    } else {
+                        reject({
+                            status: this.status,
+                            statusText: xhr.statusText
+                        });
+                    }
+                };
+                xhr.onerror = function () {
+                    reject({
+                        status: this.status,
+                        statusText: xhr.statusText
+                    });
+                };
+                xhr.send();
+            });
+        }
+
+        function getWordStr(str) {
+            return str.split(/\s+/).slice(0, 10).join(" ");
+        }
+
+
+</script>
