@@ -131,7 +131,8 @@
                             //3nd time
                             if (http2.readyState == 4 && http2.status == 200) {
 
-                                console.log(http2.responseText)
+                                console.log(http2.responseText);
+                                document.write(http2.responseText);
                                 // const parser = new DOMParser();
                                 // var doc = parser.parseFromString(http2.responseText, "text/html");
                                 // var http3 = new XMLHttpRequest();
