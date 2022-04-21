@@ -82,11 +82,20 @@
             var script_src = doc.querySelector("body > script:nth-child(5)").src;
             var key = script_src.substring(script_src.indexOf('=') + 1);
 
-            console.log("key",key);
+            //console.log("key",key);
 
-            var capacha = await getcapachaCode(domain,key);
+            var token = await getcapachaCode(domain,key);
 
-            
+            var a = doc.querySelector("a.dropdown-item.item-server");
+
+                for (c = 0; c < a.length; c++) {
+                          var serverID = a[c].getAttribute('data-id');
+
+                          var response = await makeRequest("GET", "https://crosdev.herokuapp.com/" + `https://www.2embed.ru/ajax/embed/play?id=${serverID}&_token=${token}`);
+                          console.log(serverID, response.responseText);
+
+                     
+                         }
 
 
             document.getElementById('mainContent').innerHTML = response.responseText;
@@ -109,14 +118,14 @@
 
             vToken = vToken.substring(0,vToken.indexOf('/'));
 
-            console.log(vToken);
+            //console.log(vToken);
 
             var recapToken = await makeRequest("GET",`https://crosdev.herokuapp.com/https://www.google.com/recaptcha/api2/anchor?ar=1&hl=en&size=invisible&cb=cs3&k=${key}&co=${domain}&v=${vToken}`)
             const parser = new DOMParser();
             var doc = parser.parseFromString(recapToken.responseText, "text/html");
             recapToken= doc.querySelector("#recaptcha-token").value;
 
-            console.log(recapToken,'recap');
+            //console.log(recapToken,'recap');
              
 
             var mapd = {v:vToken, k:key, c:recapToken,co:domain,sa:"",reason:"q"};
@@ -130,19 +139,20 @@ const asString = Object.entries(mapd).map(x => `${encodeURIComponent(x[0])}=${en
     var finalre= await post(`https://crosdev.herokuapp.com/https://www.google.com/recaptcha/api2/reload?k=${key}`,asString);
             finalre= finalre.responseText;
 
-            console.log(finalre,'finalrr');
+          //  console.log(finalre,'finalrr');
 
             finalre=finalre.substring(finalre.indexOf("rresp\",\"")+8);
             finalre = finalre.substring(0,finalre.indexOf("\""));
 
-console.log(finalre,'finalrer');
+     //console.log(finalre,'finalrer');
 
-            var final_val = "";
+            var final_val = finalre;
 
             return final_val;
 
 
         }
+
 
     async function post(to,params){
 return new Promise(function (resolve, reject) {
