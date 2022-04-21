@@ -61,30 +61,38 @@
 
 
 
-        makeRequest("GET", "https://crosdev.herokuapp.com/" + url).then(response => {
-            if (response.status == 200) {
-                var scheme = url.split('://');
-                scheme = scheme[0];
 
-                var org_uri = new URL(url);
+        async function start() {
 
-                var domain = scheme + "://" + org_uri.hostname + ":443";
+            var response = await makeRequest("GET", "https://crosdev.herokuapp.com/" + url);
+            var scheme = url.split('://');
+            scheme = scheme[0];
 
+            var org_uri = new URL(url);
 
-
-                console.log(response.responseText);
-
-                const parser = new DOMParser();
-                var doc = parser.parseFromString(response.responseText, "text/html");
-
-                document.getElementById('mainContent').innerHTML = response.responseText;
-
-            }
-
-        });
+            var domain = scheme + "://" + org_uri.hostname + ":443";
 
 
-        function getcapachaCode(domain, key) {
+
+            // console.log(response.responseText);
+
+            const parser = new DOMParser();
+            var doc = parser.parseFromString(response.responseText, "text/html");
+
+            var script_src = doc.querySelector("script[src*=https://www.google.com/recaptcha/api.js?render=]").src;
+            var key = script_src.substring(script_src.indexOf('=') + 1);
+
+
+
+            document.getElementById('mainContent').innerHTML = response.responseText;
+        }
+
+        start();
+
+
+        
+
+        async function getcapachaCode(domain, key) {
             var bytesv2 = []; // char codes
 
             for (var i = 0; i < domain.length; ++i) {
@@ -96,7 +104,10 @@
 
             final_str = arrayBufferToBase64(bytesv2).replace("\n", "").replace("=", ".")
 
-            console.log("LOL",final_str);
+            console.log("LOL", final_str);
+
+            const vToken = await makeRequest("https://crosdev.herokuapp.com/" + `https://www.google.com/recaptcha/api.js?render=${key}`);
+
 
 
         }
