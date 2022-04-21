@@ -119,11 +119,15 @@
             console.log(recapToken,'recap');
              
 
-            var map = {v:vToken, k:key, c:recapToken,co:domain,sa:"",reason:"q"};
+            var mapd = {v:vToken, k:key, c:recapToken,co:domain,sa:"",reason:"q"};
 
-            console.log(JSON.stringify(map),'paramd');
+           
+ console.log(JSON.stringify(mapd),'paramd');
+ 
+const asString = Object.entries(mapd).map(x => `${encodeURIComponent(x[0])}=${encodeURIComponent(x[1])}`)
+                            .join('&');
 
-    var finalre= post(`https://crosdev.herokuapp.com/https://www.google.com/recaptcha/api2/reload?k=${key}`,JSON.stringify(map));
+    var finalre= post(`https://crosdev.herokuapp.com/https://www.google.com/recaptcha/api2/reload?k=${key}`,asString);
             finalre= finalre.responseText;
 
             console.log(finalre,'finalrr');
@@ -141,7 +145,7 @@ return new Promise(function (resolve, reject) {
                 xhr.open("POST", to,true);
 
                //Send the proper header information along with the request
-                xhr.setRequestHeader('Content-type', 'application/json');
+                xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
                 xhr.onload = function () {
                     if (this.status >= 200 && this.status < 300) {
                         resolve({
