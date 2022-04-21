@@ -282,7 +282,7 @@
           console.log(obj);
 
           document.getElementById("Loader").style = "display:none!important";
-          var res = "<button class='btn btn-primary' onClick='initAgain()'>Go Back</button>";
+          var res = "<button class='btn btn-primary' onClick='initAgain()'>Go Back</button><div style='background-color: rgba(0,0,0,0.9);color: white;' id='postID'></div>";
 
           obj = obj.result[0].innerHTML;
 
@@ -291,6 +291,22 @@
 
           document.getElementById("Loader").style = "display:none!important";
           // var res = "";
+
+
+
+          //specific
+          var ps = doc.getElementsByTagName('p');
+          ps[0].remove();
+          ps[1].remove();
+
+          doc.getElementsByClassName('imdb_container')[0].remove;
+          //specific
+
+
+
+
+          doc.getElementsByTagName('p')
+
           var a = doc.getElementsByTagName("img");
 
           for (c = 0; c < a.length; c++) {
@@ -299,9 +315,12 @@
           }
 
           doc.documentElement.style.width = "100%";
-          doc.documentElement.style.backgroundColor = "black";
-          document.getElementById('mainContent').appendChild(doc.documentElement);
-          document.getElementById('mainContent').innerHTML = res + document.getElementById('mainContent').innerHTML;
+
+
+          document.getElementById('mainContent').innerHTML = res;
+
+
+          document.getElementById('postID').appendChild(doc.documentElement);
 
         }
 
