@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
   <meta http-equiv="x-ua-compatible" content="ie=edge" />
-  <title>TamilMV Site</title>
+  <title>VegaMovies Site</title>
   <!-- MDB icon -->
   <link rel="icon" href="https://vegamovies.pages.dev/img/mdb-favicon.ico" type="image/x-icon" />
   <!-- Font Awesome -->
@@ -22,7 +22,7 @@
 
   <nav class="navbar navbar-light bg-light">
     <div class="container-fluid">
-      <a class="navbar-brand">TamilMV Site</a>
+      <a class="navbar-brand">VegaMovies Site</a>
 
       <div class="input-group d-flex w-auto">
         <div class="form-outline">
@@ -146,7 +146,7 @@
 
           // var a = doc.getElementsByTagName("a");
           var posts = doc.querySelectorAll("div.post-item-wrap");
-          var cat = doc.querySelectorAll("img.jw-provider-icon");
+          var cat = doc.querySelectorAll(".filter-bar__provider__icon.active");
 
           // for (c = 0; c < a.length; c++) {
 
@@ -218,46 +218,41 @@
             console.log(obj);
 
             obj = obj.result;
+            var res = ``;
+
 
             obj.forEach(element => {
               var html = element.innerHTML;
               const parser = new DOMParser();
-              var doc = parser.parseFromString(html, "text/html");
+              var post = parser.parseFromString(html, "text/html");
 
-              var a = doc.getElementsByTagName("a");
+              var img = post.getElementsByTagName('img')[0].src;
+              var anchor = post.getElementsByTagName('a');
+              anchor = anchor[anchor.length - 1];
 
-              for (c = 0; c < a.length; c++) {
-                a[c].href = "javascript:loadEpisodes('" + a[c].href + "');";
-              }
-
-              doc.documentElement.style.marginBottom = "20px";
-
-              document.getElementById('mainContent').appendChild(doc.documentElement);
-
+              res = res + `
+<div class="col-lg-3 col-md-6 col-sm-12 ">
+<div class="card">
+<div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+<img src="${img}" class="img-fluid"/>
+<a href="#!">
+<div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+</a>
+</div>
+<div class="card-body">
+<h5 class="card-title">${anchor.innerText}</h5>
+<button class="btn btn-primary" data-mdb-toggle="modal" onclick="loadEpisodes('${anchor.href}')">OPEN</button>
+</div>
+</div>
+</div>
+`;
 
             });
 
 
             document.getElementById("Loader").style = "display:none!important";
+            document.getElementById('mainContent').innerHTML = res;
 
-
-            // const parser = new DOMParser();
-            // var doc = parser.parseFromString(obj, "text/html");
-
-            // var a = doc.getElementsByTagName("a");
-
-            // for (c = 0; c < a.length; c++) {
-            //     a[c].href = "javascript:loadEpisodes('" + a[c].href + "');";
-
-            //     console.log(a[c].href);
-            // }
-
-            // // obj = obj.replace();
-
-            // document.getElementById("Loader").style = "display:none!important";
-            // // var res = "";
-
-            // document.getElementById('mainContent').appendChild(doc.documentElement);
 
           }
 
