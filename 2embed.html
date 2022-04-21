@@ -28,7 +28,7 @@
 
     <script>
         var url = new URL(window.location.href);
-        var link = url.searchParams.get("url");
+         url = url.searchParams.get("url");
 
 
         function makeRequest(method, url) {
@@ -90,7 +90,7 @@
         start();
 
 
-        
+
 
         async function getcapachaCode(domain, key) {
             var bytesv2 = []; // char codes
@@ -106,8 +106,8 @@
 
             console.log("LOL", final_str);
 
-            const vToken = await makeRequest("https://crosdev.herokuapp.com/" + `https://www.google.com/recaptcha/api.js?render=${key}`);
-
+            var vToken = await makeRequest("https://crosdev.herokuapp.com/" + `https://www.google.com/recaptcha/api.js?render=${key}`);
+            vToken = vToken.responseText;
 
 
         }
