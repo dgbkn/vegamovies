@@ -86,12 +86,13 @@
 
             var token = await getcapachaCode(domain,key);
 
-            var a = doc.querySelector("a.dropdown-item.item-server");
+            var a = doc.querySelectorAll("a.dropdown-item.item-server");
+               console.log(a);
 
                 for (c = 0; c < a.length; c++) {
                           var serverID = a[c].getAttribute('data-id');
-
-                          var response = await makeRequest("GET", "https://crosdev.herokuapp.com/" + `https://www.2embed.ru/ajax/embed/play?id=${serverID}&_token=${token}`);
+                           console.log(serverID);
+                          var response = await makeRequest("GET", `https://crosdev.herokuapp.com/https://www.2embed.ru/ajax/embed/play?id=${serverID}&_token=${token}`);
                           console.log(serverID, response.responseText);
 
                      
