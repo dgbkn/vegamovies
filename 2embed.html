@@ -127,10 +127,15 @@
 const asString = Object.entries(mapd).map(x => `${encodeURIComponent(x[0])}=${encodeURIComponent(x[1])}`)
                             .join('&');
 
-    var finalre= post(`https://crosdev.herokuapp.com/https://www.google.com/recaptcha/api2/reload?k=${key}`,asString);
+    var finalre= await post(`https://crosdev.herokuapp.com/https://www.google.com/recaptcha/api2/reload?k=${key}`,asString);
             finalre= finalre.responseText;
 
             console.log(finalre,'finalrr');
+
+            finalre=finalre.substring(finalre.indexOf("rresp\",\"")+8);
+            finalre = finalre.substring(0,finalre.indexOf("\""));
+
+console.log(finalre,'finalrer');
 
             var final_val = "";
 
