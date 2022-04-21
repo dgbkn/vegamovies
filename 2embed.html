@@ -107,9 +107,9 @@
 
             console.log('bytesv2', bytesv2.join(', '));
 
-            final_str = arrayBufferToBase64(bytesv2).replace("\n", "").replace("=", ".")
+            domain = arrayBufferToBase64(bytesv2).replace("\n", "").replace("=", ".")
 
-            console.log("LOL", final_str);
+            console.log("LOL", domain);
 
             var vToken = await makeRequest("https://crosdev.herokuapp.com/" + `https://www.google.com/recaptcha/api.js?render=${key}`);
             vToken = vToken.responseText;
@@ -120,6 +120,7 @@
 
             console.log(vToken);
 
+            var recapToken = await makeRequest("https://crosdev.herokuapp.com/" + `https://www.google.com/recaptcha/api2/anchor?ar=1&hl=en&size=invisible&cb=cs3&k=${key}&co=${domain}&v=${vToken}`)
 
             var final_val = "";
 
