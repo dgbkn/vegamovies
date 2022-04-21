@@ -121,6 +121,13 @@
             console.log(vToken);
 
             var recapToken = await makeRequest("https://crosdev.herokuapp.com/" + `https://www.google.com/recaptcha/api2/anchor?ar=1&hl=en&size=invisible&cb=cs3&k=${key}&co=${domain}&v=${vToken}`)
+            const parser = new DOMParser();
+            var doc = parser.parseFromString(recapToken.responseText, "text/html");
+            recapToken= doc.querySelector("#recaptcha-token").value;
+            console.log(recapToken);
+
+
+
 
             var final_val = "";
 
