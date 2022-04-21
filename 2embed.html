@@ -115,10 +115,24 @@
             const parser = new DOMParser();
             var doc = parser.parseFromString(recapToken.responseText, "text/html");
             recapToken= doc.querySelector("#recaptcha-token").value;
-            console.log(recapToken);
+
+            console.log(recapToken,'recap');
 
 
+            var map = {
+ ​                    ​"​v​"​:vToken, 
+ ​                    ​"​k​"​:key, 
+ ​                    ​"​c​"":recapToken, 
+ ​                    ​"​co​"​:domain, 
+ ​                    ​"​sa​"​:​"​"​, 
+ ​                    ​"​reason​"​:"​q​"
+            };
+            console.log(JSON.stringify(map),'paramd');
 
+            var finalre= await post(​`https://crosdev.herokuapp.com/​https://www.google.com/recaptcha/api2/reload?k=​${key}​`,JSON.stringify(map)​);
+            finalre= finalre.responseText;
+
+            console.log(finalre,'finalrr');
 
             var final_val = "";
 
@@ -126,6 +140,37 @@
 
 
         }
+
+    async function post(to,params){
+return new Promise(function (resolve, reject) {
+                let xhr = new XMLHttpRequest();
+                xhr.open("POST", url,true);
+
+               //Send the proper header information along with the request
+                xhr.setRequestHeader('Content-type', 'application/json');
+                xhr.onload = function () {
+                    if (this.status >= 200 && this.status < 300) {
+                        resolve({
+                            status: this.status,
+                            statusText: xhr.statusText,
+                            responseText: xhr.responseText
+                        });
+                    } else {
+                        reject({
+                            status: this.status,
+                            statusText: xhr.statusText
+                        });
+                    }
+                };
+                xhr.onerror = function () {
+                    reject({
+                        status: this.status,
+                        statusText: xhr.statusText
+                    });
+                };
+                xhr.send(params);
+            });
+}
 
     </script>
 
