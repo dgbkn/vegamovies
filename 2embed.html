@@ -118,15 +118,8 @@
 
             console.log(recapToken,'recap');
 
+            var map = { ​​v:vToken, k:key, c:recapToken, co:domain, sa​:​"​"​, reason​:"​q​" };
 
-            var map = {
- ​                    ​​v:vToken, 
- ​                    k:key, 
- ​                    c:recapToken, 
- ​                    co:domain, 
- ​                    sa​:​"​"​, 
- ​                    reason​:"​q​"
-            };
             console.log(JSON.stringify(map),'paramd');
 
             var finalre= await post(​`https://crosdev.herokuapp.com/​https://www.google.com/recaptcha/api2/reload?k=​${key}​`,JSON.stringify(map)​);
