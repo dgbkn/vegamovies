@@ -113,6 +113,11 @@
 
             var vToken = await makeRequest("https://crosdev.herokuapp.com/" + `https://www.google.com/recaptcha/api.js?render=${key}`);
             vToken = vToken.responseText;
+
+            vToken = vToken.substring(vToken.indexOf('releases/') + 1);
+
+            vToken = vToken.substring(0,vToken.indexOf('/'));
+
             console.log(vToken);
 
 
