@@ -145,7 +145,12 @@
                                 for (c = 0; c < a.length; c++) {
 
                                     console.log(a[c].innerText);
-                                    eval(a[c].innerText);
+                                    try{
+                                        
+                                        eval(a[c].innerText);
+                                    }catch(es){
+                                        console.log(ex,"EXPECTION IN SCROPT no "+(c+1))
+                                    }
                                 }
 
                                 var res = `
