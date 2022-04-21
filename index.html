@@ -126,6 +126,8 @@
   <script type="text/javascript">
 
     function initAgain() {
+      document.getElementById('mainContent').style.backgroundColor = "";
+      document.getElementById('mainContent').style.color = "";
 
       document.getElementById('mainContent').innerHTML = ``;
       document.getElementById("Loader").style = "";
@@ -308,7 +310,7 @@
 
           document.getElementById('mainContent').style.backgroundColor = "black";
           document.getElementById('mainContent').style.color = "white";
-          
+
           document.getElementById('mainContent').appendChild(doc.documentElement);
           document.getElementById('mainContent').innerHTML = res + document.getElementById('mainContent').innerHTML;
 
