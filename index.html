@@ -309,7 +309,7 @@
           var a = doc.getElementsByTagName("a");
 
           for (c = 0; c < a.length; c++) {
-            a[c].href = "/resolve.html?url=" + encodeURIComponent(a[c].href);
+            a[c].href = "javascript:loadURL('" + a[c].href + "');";
           }
 
           doc.documentElement.style.width = "100%";
@@ -338,6 +338,19 @@
 
     }
 
+
+    function loadURL(uri){
+      
+      makeRequest("GET", `https://scrap.torrentdev.workers.dev/?url=${encodeURIComponent(uri)}&selector=body`).then(response => {
+
+if (response.status == 200) {
+    console.log(response.responseText);
+    }
+
+  });
+
+  
+  }
 
 
 
