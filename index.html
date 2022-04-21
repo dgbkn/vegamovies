@@ -351,7 +351,7 @@
           console.log(obj);
           obj = obj.result[0].innerHTML;
 
-          obj = obj.replaceAll("101desire.com","reflare-app.torrentdev.workers.dev");
+          obj = obj.replaceAll("101desire.com", "reflare-app.torrentdev.workers.dev");
 
           const parser = new DOMParser();
           var doc = parser.parseFromString(obj, "text/html");
@@ -361,48 +361,68 @@
 
           var post_url = doc.getElementsByTagName("form")[0].action;
 
-          var http = new XMLHttpRequest();
 
           const formData = new FormData(doc.getElementsByTagName("form")[0]);
           const data = [...formData.entries()];
-          const asString = data
-            .map(x => `${encodeURIComponent(x[0])}=${encodeURIComponent(x[1])}`)
-            .join('&');
 
 
-          var params = asString;
-          http.open('POST',post_url, true);
+          const params = [...formData.entries()];
 
-          //Send the proper header information along with the request
-          http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-
-          http.onreadystatechange = function () {//Call a function when the state changes.
-            if (http.readyState == 4 && http.status == 200) {
-              const parser = new DOMParser();
-              var doc = parser.parseFromString(http.responseText, "text/html");
-              var form = doc.getElementById('landing');
-              const formData = new FormData(form);
-              const params = [...formData.entries()];
-
-              var param = {};
+          var param = {};
 
 
-              params.forEach(c => {
-                param[c[0]] = c[1];
-                
-              });
+          params.forEach(c => {
+            param[c[0]] = c[1];
+
+          });
 
 
-              console.log(param);
+          console.log(param);
 
-              var post_url = form.action;
+          var post_url = form.action;
 
-              post(post_url,param);
+          post(post_url, param);
 
-            }
-          }
 
-          http.send(params);
+          // const asString = data
+          // .map(x => `${encodeURIComponent(x[0])}=${encodeURIComponent(x[1])}`)
+          // .join('&');
+
+
+          // var http = new XMLHttpRequest();
+          // var params = asString;
+          // http.open('POST',post_url, true);
+
+          // //Send the proper header information along with the request
+          // http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+          // http.onreadystatechange = function () {//Call a function when the state changes.
+          //   if (http.readyState == 4 && http.status == 200) {
+          //     const parser = new DOMParser();
+          //     var doc = parser.parseFromString(http.responseText, "text/html");
+          //     var form = doc.getElementById('landing');
+          //     const formData = new FormData(form);
+          //     const params = [...formData.entries()];
+
+          //     var param = {};
+
+
+          //     params.forEach(c => {
+          //       param[c[0]] = c[1];
+
+          //     });
+
+
+          //     console.log(param);
+
+          //     var post_url = form.action;
+
+          //     post(post_url,param);
+
+          //   }
+          // }
+
+          // http.send(params);
 
 
         }
