@@ -79,12 +79,12 @@
             const parser = new DOMParser();
             var doc = parser.parseFromString(response.responseText, "text/html");
 
-            var script_src = doc.querySelector("body > script:nth-child(6)").src;
+            var script_src = doc.querySelector("body > script:nth-child(5)").src;
             var key = script_src.substring(script_src.indexOf('=') + 1);
 
             console.log("key",key);
 
-            var capacha = await getcapachaCode();
+            var capacha = await getcapachaCode(domain,key);
 
             
 
