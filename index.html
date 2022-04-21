@@ -306,10 +306,9 @@
 
           doc.documentElement.style.width = "100%";
 
-          doc.body.style.backgroundColor = "black";
-          doc.body.style.color = "white";
+          document.getElementById('mainContent').style.backgroundColor = "black";
+          document.getElementById('mainContent').style.color = "white";
           
-
           document.getElementById('mainContent').appendChild(doc.documentElement);
           document.getElementById('mainContent').innerHTML = res + document.getElementById('mainContent').innerHTML;
 
