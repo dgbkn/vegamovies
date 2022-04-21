@@ -99,7 +99,7 @@
 
         async function getcapachaCode(domain, key) {
 
-            domain = btoa(domain).replace("\n", "").replace("=", ".");
+            domain = btoa(domain).replaceAll("\n", "").replaceAll("=", ".");
             console.log("LOL", domain);
 
             var vToken = await makeRequest("GET",`https://crosdev.herokuapp.com/https://www.google.com/recaptcha/api.js?render=${key}`);
