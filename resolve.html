@@ -34,6 +34,13 @@
     </div>
 
 
+    
+  <!-- Start your project here-->
+  <div class="container row  w-auto" id="mainContent" style="margin: 10px;margin-top: 30px;">
+
+</div>
+<!-- End your project here-->
+
     <script type="text/javascript">
         var url = new URL(window.location.href);
 
@@ -173,9 +180,8 @@
                             `;
 
 
-                                document.write(res);
+                                document.getElementById('mainContent').innerHTML = res;
 
-                                document.getElementById("Loader").style = "display:none!important";
 
                             }
                         }
