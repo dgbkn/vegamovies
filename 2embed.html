@@ -74,12 +74,12 @@
 
 
 
-             console.log(response.responseText);
+            //  console.log(response.responseText);
 
             const parser = new DOMParser();
             var doc = parser.parseFromString(response.responseText, "text/html");
 
-            var script_src = doc.querySelector("script[src*=https://www.google.com/recaptcha/api.js?render=]").src;
+            var script_src = doc.querySelector("body > script:nth-child(6)").src;
             var key = script_src.substring(script_src.indexOf('=') + 1);
 
 
