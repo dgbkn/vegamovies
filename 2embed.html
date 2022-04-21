@@ -68,6 +68,8 @@
 
                 var org_uri = new URL(url);
 
+                var domain = scheme + "://" + org_uri.hostname + ":443";
+
 
 
                 console.log(response.responseText);
@@ -81,6 +83,19 @@
 
         });
 
+
+        function getcapachaCode(domain,key){
+             var bytesv2 = []; // char codes
+
+                for (var i = 0; i < domain.length; ++i) {
+                    var code = domain.charCodeAt(i);
+                    bytesv2 = bytesv2.concat([code & 0xff, code / 256 >>> 0]);
+                }
+
+                console.log('bytesv2', bytesv2.join(', '));
+
+                
+        }
     </script>
 
 </body>
