@@ -16,8 +16,11 @@
     <!-- MDB -->
     <link rel="stylesheet" href="https://vegamovies.pages.dev/css/mdb.min.css" />
 
-    <script type='text/javascript' src='https://soraserver.themesia.com/wp-includes/js/jquery/jquery.min.js?ver=3.6.0' id='jquery-core-js'></script>
-    <script type='text/javascript' src='https://soraserver.themesia.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.3.2' id='jquery-migrate-js'></script>
+    <script type='text/javascript' src='https://soraserver.themesia.com/wp-includes/js/jquery/jquery.min.js?ver=3.6.0'
+        id='jquery-core-js'></script>
+    <script type='text/javascript'
+        src='https://soraserver.themesia.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.3.2'
+        id='jquery-migrate-js'></script>
 
 
 </head>
@@ -134,36 +137,55 @@
                         http2.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
                         http2.onreadystatechange = function () {
                             //3nd time
-                            if (http2.readyState == 4 && http2.status == 200) {
+                            console.log(http2.responseText);
+                            const parser = new DOMParser();
+                            var doc = parser.parseFromString(http2.responseText, "text/html");
+                            var http2 = new XMLHttpRequest();
 
-                                console.log(http2.responseText);
-                                const parser = new DOMParser();
-                                var doc = parser.parseFromString(http2.responseText, "text/html");
-                                var http2 = new XMLHttpRequest();
+                            var a = doc.getElementsByTagName("script");
 
-                                var a = doc.getElementsByTagName("script");
+                            for (c = 0; c < a.length; c++) {
 
-                                for (c = 0; c < a.length; c++) {                                 
-
-                                    console.log(a[c].innerText);
-                                    eval(a[c].innerText);
-                                }
-
-
+                                console.log(a[c].innerText);
+                                eval(a[c].innerText);
                             }
-                        }
-                        http2.send(params);
-                    }
-                }
-                http.send(params);
 
-                // var res = "";
-                // document.getElementById('mainContent').appendChild(doc.documentElement);
+                            var res =`
+                            <div id="landing" class="soractrl">
+   <center>
+      <div class="klnsora">
+         <center><a href="/" target="_blank"><img src="https://soraserver.themesia.com/wp-content/uploads/2019/04/soralink-728.png" /></a></center>
+      </div>
+      <input type="hidden" name="recaptcha_response" id="recaptchaResponse">
+      <div class="wait">
+         <img id="pleasewait" src="https://soraserver.themesia.com/wp-content/uploads/2022/01/wait.png" />
+      </div>
+      <div class="to" style="display: none;">
+         <a href="#generate" id="generater" x-onclick="generate()"><img
+            src="https://soraserver.themesia.com/wp-content/uploads/2022/01/start.png" /></a>
+      </div>
+   </center>
+</div>
+                            
+                            `;
 
-            }
+
+     document.getElementById('mainContent').innerHTML =res;
 
 
-        });
+    }
+    http2.send(params);
+    }
+    }
+    http.send(params);
+
+    // var res = "";
+    // document.getElementById('mainContent').appendChild(doc.documentElement);
+
+    }
+
+
+    });
 
 
     </script>
