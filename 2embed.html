@@ -138,7 +138,7 @@
     async function post(to,params){
 return new Promise(function (resolve, reject) {
                 let xhr = new XMLHttpRequest();
-                xhr.open("POST", url,true);
+                xhr.open("POST", to,true);
 
                //Send the proper header information along with the request
                 xhr.setRequestHeader('Content-type', 'application/json');
