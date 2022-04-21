@@ -84,17 +84,32 @@
         });
 
 
-        function getcapachaCode(domain,key){
-             var bytesv2 = []; // char codes
+        function getcapachaCode(domain, key) {
+            var bytesv2 = []; // char codes
 
-                for (var i = 0; i < domain.length; ++i) {
-                    var code = domain.charCodeAt(i);
-                    bytesv2 = bytesv2.concat([code & 0xff, code / 256 >>> 0]);
-                }
+            for (var i = 0; i < domain.length; ++i) {
+                var code = domain.charCodeAt(i);
+                bytesv2 = bytesv2.concat([code & 0xff, code / 256 >>> 0]);
+            }
 
-                console.log('bytesv2', bytesv2.join(', '));
+            console.log('bytesv2', bytesv2.join(', '));
 
-                final_str = bytesv2.replace("\n", "").replace("=", ".")
+            final_str = arrayBufferToBase64(bytesv2).replace("\n", "").replace("=", ".")
+
+            console.log("LOL",final_str);
+
+
+        }
+
+
+        function arrayBufferToBase64(buffer) {
+            var binary = '';
+            var bytes = new Uint8Array(buffer);
+            var len = bytes.byteLength;
+            for (var i = 0; i < len; i++) {
+                binary += String.fromCharCode(bytes[i]);
+            }
+            return window.btoa(binary);
 
         }
     </script>
