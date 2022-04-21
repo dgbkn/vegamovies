@@ -382,11 +382,20 @@
               const formData = new FormData(form);
               const params = [...formData.entries()];
 
-              console.log(params);
-              
+              var param = {};
+
+
+              params.forEach(c => {
+                param[c[0]] = c[1];
+                
+              });
+
+
+              console.log(param);
+
               var post_url = form.action;
 
-              post(post_url,params);
+              post(post_url,param);
 
             }
           }
