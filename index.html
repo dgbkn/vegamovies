@@ -273,7 +273,7 @@
       document.getElementById('mainContent').innerHTML = ``;
       document.getElementById("Loader").style = "";
 
-      makeRequest("GET", `https://scrap.torrentdev.workers.dev/?url=${url}&selector=div.ipsType_normal.ipsType_richText.ipsPadding_bottom.ipsContained`).then(response => {
+      makeRequest("GET", `https://scrap.torrentdev.workers.dev/?url=${url}&selector=div.entry-content`).then(response => {
         if (response.status == 200) {
           console.log(response.responseText);
 
