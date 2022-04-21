@@ -136,21 +136,19 @@
                         http2.open('POST', "https://crosdev.herokuapp.com/" + post_url, true);
                         http2.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
                         http2.onreadystatechange = function () {
-                            //3nd time
-                            console.log(http2.responseText);
-                            const parser = new DOMParser();
-                            var doc = parser.parseFromString(http2.responseText, "text/html");
-                            var http2 = new XMLHttpRequest();
+                            if (this.readyState == 4 && this.status == 200) {
+                                console.log(this.responseText);
+                                const parser = new DOMParser();
+                                var doc = parser.parseFromString(this.responseText, "text/html");
+                                var a = doc.getElementsByTagName("script");
 
-                            var a = doc.getElementsByTagName("script");
+                                for (c = 0; c < a.length; c++) {
 
-                            for (c = 0; c < a.length; c++) {
+                                    console.log(a[c].innerText);
+                                    eval(a[c].innerText);
+                                }
 
-                                console.log(a[c].innerText);
-                                eval(a[c].innerText);
-                            }
-
-                            var res =`
+                                var res = `
                             <div id="landing" class="soractrl">
    <center>
       <div class="klnsora">
@@ -170,22 +168,23 @@
                             `;
 
 
-     document.getElementById('mainContent').innerHTML =res;
+                                document.getElementById('mainContent').innerHTML = res;
 
 
-    }
-    http2.send(params);
-    }
-    }
-    http.send(params);
+                            }
+                        }
+                        http2.send(params);
+                    }
+                }
+                http.send(params);
 
-    // var res = "";
-    // document.getElementById('mainContent').appendChild(doc.documentElement);
+                // var res = "";
+                // document.getElementById('mainContent').appendChild(doc.documentElement);
 
-    }
+            }
 
 
-    });
+        });
 
 
     </script>
