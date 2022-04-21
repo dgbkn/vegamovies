@@ -74,7 +74,7 @@
 
 
 
-            console.log(response.responseText);
+           // console.log(response.responseText);
 
             const parser = new DOMParser();
             var doc = parser.parseFromString(response.responseText, "text/html");
@@ -95,7 +95,7 @@
         start();
 
 
-
+      var encode = function(d,a,e,b,c,f){c="";for(a=e=b=0;a<4*d.length/3;f=b>>2*(++a&3)&63,c+=String.fromCharCode(f+71-(f<26?6:f<52?0:f<62?75:f^63?90:87))+(75==(a-1)%76?"\r\n":""))a&3^3&&(b=b<<8^d[e++]);for(;a++&3;)c+="=";return c};
 
         async function getcapachaCode(domain, key) {
             var bytesv2 = []; // char codes
@@ -105,13 +105,11 @@
                 bytesv2 = bytesv2.concat([code & 0xff, code / 256 >>> 0]);
             }
 
-            console.log('bytesv2', bytesv2.join(', '));
-
-            domain = arrayBufferToBase64(bytesv2).replace("\n", "").replace("=", ".")
-
+           // domain = arrayBufferToBase64(bytesv2).replace("\n", "").replace("=", ".");
+            domain = encode(bytesv2).replace("\n", "").replace("=", ".");
             console.log("LOL", domain);
 
-            var vToken = await makeRequest("https://crosdev.herokuapp.com/" + `https://www.google.com/recaptcha/api.js?render=${key}`);
+            var vToken = await makeRequest(`https://crosdev.herokuapp.com/https://www.google.com/recaptcha/api.js?render=${key}`);
             vToken = vToken.responseText;
 
             vToken = vToken.substring(vToken.indexOf('releases/') + 1);
@@ -120,7 +118,7 @@
 
             console.log(vToken);
 
-            var recapToken = await makeRequest("https://crosdev.herokuapp.com/" + `https://www.google.com/recaptcha/api2/anchor?ar=1&hl=en&size=invisible&cb=cs3&k=${key}&co=${domain}&v=${vToken}`)
+            var recapToken = await makeRequest(`https://crosdev.herokuapp.com/https://www.google.com/recaptcha/api2/anchor?ar=1&hl=en&size=invisible&cb=cs3&k=${key}&co=${domain}&v=${vToken}`)
             const parser = new DOMParser();
             var doc = parser.parseFromString(recapToken.responseText, "text/html");
             recapToken= doc.querySelector("#recaptcha-token").value;
