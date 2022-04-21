@@ -339,18 +339,18 @@
     }
 
 
-    function loadURL(uri){
-      
+    function loadURL(uri) {
+
       makeRequest("GET", `https://scrap.torrentdev.workers.dev/?url=${encodeURIComponent(uri)}&selector=body`).then(response => {
 
-if (response.status == 200) {
-    console.log(response.responseText);
+        if (response.status == 200) {
+          console.log(response.responseText);
+        }
+
+      });
+
+
     }
-
-  });
-
-  
-  }
 
 
 
