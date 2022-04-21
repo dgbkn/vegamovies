@@ -123,7 +123,7 @@
 
             console.log(JSON.stringify(map),'paramd');
 
-            var finalre= await post(​`https://crosdev.herokuapp.com/​https://www.google.com/recaptcha/api2/reload?k=​${key}​`,JSON.stringify(map)​);
+    var finalre= post(`https://www.google.com/recaptcha/api2/reload?k=${key}`,JSON.stringify(map));
             finalre= finalre.responseText;
 
             console.log(finalre,'finalrr');
