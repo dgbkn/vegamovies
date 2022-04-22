@@ -6,6 +6,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>2EMBED</title>
+      <!-- MDB icon -->
+  <link rel="icon" href="https://vegamovies.pages.dev/img/mdb-favicon.ico" type="image/x-icon" />
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <!-- Google Fonts Roboto -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" />
+  <!-- MDB -->
+  <link rel="stylesheet" href="https://vegamovies.pages.dev/css/mdb.min.css" />
 </head>
 
 <body>
@@ -20,9 +28,12 @@
 
     <!-- Start your project here-->
     <div class="container row  w-auto" id="mainContent" style="margin: 10px;margin-top: 30px;">
-
+        
     </div>
     <!-- End your project here-->
+    
+    
+<iframe id="videoplayer" src="" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" allowfullscreen width="100%" height="100%"></iframe>
 
 
 
@@ -89,18 +100,29 @@
             var a = doc.querySelectorAll("a.dropdown-item.item-server");
                console.log(a);
 
+            var res =``;
+            var arra = [];
                 for (c = 0; c < a.length; c++) {
                           var serverID = a[c].getAttribute('data-id');
                            console.log(serverID);
                           var token = await getcapachaCode(domain,key);
                           var response = await makeRequest("GET", `https://crosdev.herokuapp.com/https://www.2embed.ru/ajax/embed/play?id=${serverID}&_token=${token}`);
-                          console.log(serverID, response.responseText);
+//                           console.log(serverID, response.responseText);
+                           var obj = JSON.parse(response.responseText);
 
-                     
+                           res = res + `
+                           <button class="btn btn-primary" onclick="setSrc('${obj.link}')">${a[c].innerText}</button>
+                           `;
+                    
+                    
+                    arra.push(obj);
                          }
 
+            console.log("sources",arra);
+            
 
-            document.getElementById('mainContent').innerHTML = response.responseText;
+            document.getElementById('mainContent').innerHTML = res;
+            setSrc(arra[0].link);
         }
 
         start();
@@ -108,6 +130,12 @@
 
 
 
+        function setSrc(src){
+          document.getElementById('videoplayer').src=src;
+
+        }
+        
+        
         async function getcapachaCode(domain, key) {
 
             domain = btoa(domain).replaceAll("\n", "").replaceAll("=", ".");
