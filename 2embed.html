@@ -104,6 +104,9 @@
             var a = doc.querySelectorAll("a.dropdown-item.item-server");
             console.log(a);
 
+            var setamin = '';
+
+
             var res = ``;
             var arra = [];
             for (c = 0; c < a.length; c++) {
@@ -115,9 +118,10 @@
                 var obj = JSON.parse(response.responseText);
 
                 if (obj.link.includes("streamlare")) {
+
                     var s = obj.link.split('/');
                     obj.link = "https://ninjastream.lolhoinc.repl.co/streamlare/" + s[s.length - 1];
-
+                    setamin = obj.link;
                 }
 
                 res = res + `
@@ -132,7 +136,7 @@
 
             document.getElementById("Loader").style = "display:none!important";
             document.getElementById('mainContent').innerHTML = res;
-            setSrc(arra[0].link);
+            setSrc(setamin);
         }
 
         start();
