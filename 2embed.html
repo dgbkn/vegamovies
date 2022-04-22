@@ -6,14 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>2EMBED</title>
-      <!-- MDB icon -->
-  <link rel="icon" href="https://vegamovies.pages.dev/img/mdb-favicon.ico" type="image/x-icon" />
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
-  <!-- Google Fonts Roboto -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" />
-  <!-- MDB -->
-  <link rel="stylesheet" href="https://vegamovies.pages.dev/css/mdb.min.css" />
+    <!-- MDB icon -->
+    <link rel="icon" href="https://vegamovies.pages.dev/img/mdb-favicon.ico" type="image/x-icon" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <!-- Google Fonts Roboto -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" />
+    <!-- MDB -->
+    <link rel="stylesheet" href="https://vegamovies.pages.dev/css/mdb.min.css" />
 </head>
 
 <body>
@@ -28,20 +29,21 @@
 
     <!-- Start your project here-->
     <div class="container row  w-auto btn-group" role="group" id="mainContent" style="margin: 10px;margin-top: 30px;">
-        
+
     </div>
     <!-- End your project here-->
-    
- 
 
-    
-<iframe id="videoplayer" src="" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" allowfullscreen width="100%" height="600px"></iframe>
+
+
+
+    <iframe id="videoplayer" src="" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" allowfullscreen
+        width="100%" height="600px"></iframe>
 
 
 
     <script>
         var url = new URL(window.location.href);
-         url = url.searchParams.get("url");
+        url = url.searchParams.get("url");
 
 
         function makeRequest(method, url) {
@@ -87,7 +89,7 @@
 
 
 
-           // console.log(response.responseText);
+            // console.log(response.responseText);
 
             const parser = new DOMParser();
             var doc = parser.parseFromString(response.responseText, "text/html");
@@ -97,37 +99,37 @@
 
             //console.log("key",key);
 
-           // var token = await getcapachaCode(domain,key);
+            // var token = await getcapachaCode(domain,key);
 
             var a = doc.querySelectorAll("a.dropdown-item.item-server");
-               console.log(a);
+            console.log(a);
 
-            var res =``;
+            var res = ``;
             var arra = [];
-                for (c = 0; c < a.length; c++) {
-                          var serverID = a[c].getAttribute('data-id');
-                           console.log(serverID);
-                          var token = await getcapachaCode(domain,key);
-                          var response = await makeRequest("GET", `https://crosdev.herokuapp.com/https://www.2embed.ru/ajax/embed/play?id=${serverID}&_token=${token}`);
-//                           console.log(serverID, response.responseText);
-                           var obj = JSON.parse(response.responseText);
-                    
-                            if(obj.link.includes("streamlare"){
-                               var s = obj.link.split('/');
-                                obj.link = "https://ninjastream.lolhoinc.repl.co/streamlare/" +  s[s.length - 1];
-                                  
-                               }
+            for (c = 0; c < a.length; c++) {
+                var serverID = a[c].getAttribute('data-id');
+                console.log(serverID);
+                var token = await getcapachaCode(domain, key);
+                var response = await makeRequest("GET", `https://crosdev.herokuapp.com/https://www.2embed.ru/ajax/embed/play?id=${serverID}&_token=${token}`);
+                //                           console.log(serverID, response.responseText);
+                var obj = JSON.parse(response.responseText);
 
-                           res = res + `
+                if (obj.link.includes("streamlare")) {
+                    var s = obj.link.split('/');
+                    obj.link = "https://ninjastream.lolhoinc.repl.co/streamlare/" + s[s.length - 1];
+
+                }
+
+                res = res + `
                            <button class="btn btn-primary" onclick="setSrc('${obj.link}')">${a[c].innerText}</button>
                            `;
-                    
-                    
-                    arra.push(obj);
-                         }
 
-            console.log("sources",arra);
-            
+
+                arra.push(obj);
+            }
+
+            console.log("sources", arra);
+
             document.getElementById("Loader").style = "display:none!important";
             document.getElementById('mainContent').innerHTML = res;
             setSrc(arra[0].link);
@@ -138,51 +140,51 @@
 
 
 
-        function setSrc(src){
-          document.getElementById('videoplayer').src=src;
+        function setSrc(src) {
+            document.getElementById('videoplayer').src = src;
 
         }
-        
-        
+
+
         async function getcapachaCode(domain, key) {
 
             domain = btoa(domain).replaceAll("\n", "").replaceAll("=", ".");
             console.log("LOL", domain);
 
-            var vToken = await makeRequest("GET",`https://crosdev.herokuapp.com/https://www.google.com/recaptcha/api.js?render=${key}`);
+            var vToken = await makeRequest("GET", `https://crosdev.herokuapp.com/https://www.google.com/recaptcha/api.js?render=${key}`);
             vToken = vToken.responseText;
 
             vToken = vToken.substring(vToken.indexOf('releases/') + 9);
 
-            vToken = vToken.substring(0,vToken.indexOf('/'));
+            vToken = vToken.substring(0, vToken.indexOf('/'));
 
             //console.log(vToken);
 
-            var recapToken = await makeRequest("GET",`https://crosdev.herokuapp.com/https://www.google.com/recaptcha/api2/anchor?ar=1&hl=en&size=invisible&cb=cs3&k=${key}&co=${domain}&v=${vToken}`)
+            var recapToken = await makeRequest("GET", `https://crosdev.herokuapp.com/https://www.google.com/recaptcha/api2/anchor?ar=1&hl=en&size=invisible&cb=cs3&k=${key}&co=${domain}&v=${vToken}`)
             const parser = new DOMParser();
             var doc = parser.parseFromString(recapToken.responseText, "text/html");
-            recapToken= doc.querySelector("#recaptcha-token").value;
+            recapToken = doc.querySelector("#recaptcha-token").value;
 
             //console.log(recapToken,'recap');
-             
 
-            var mapd = {v:vToken, k:key, c:recapToken,co:domain,sa:"",reason:"q"};
 
-           
- console.log(JSON.stringify(mapd),'paramd');
- 
-const asString = Object.entries(mapd).map(x => `${encodeURIComponent(x[0])}=${encodeURIComponent(x[1])}`)
-                            .join('&');
+            var mapd = { v: vToken, k: key, c: recapToken, co: domain, sa: "", reason: "q" };
 
-    var finalre= await post(`https://crosdev.herokuapp.com/https://www.google.com/recaptcha/api2/reload?k=${key}`,asString);
-            finalre= finalre.responseText;
 
-          //  console.log(finalre,'finalrr');
+            console.log(JSON.stringify(mapd), 'paramd');
 
-            finalre=finalre.substring(finalre.indexOf("rresp\",\"")+8);
-            finalre = finalre.substring(0,finalre.indexOf("\""));
+            const asString = Object.entries(mapd).map(x => `${encodeURIComponent(x[0])}=${encodeURIComponent(x[1])}`)
+                .join('&');
 
-     //console.log(finalre,'finalrer');
+            var finalre = await post(`https://crosdev.herokuapp.com/https://www.google.com/recaptcha/api2/reload?k=${key}`, asString);
+            finalre = finalre.responseText;
+
+            //  console.log(finalre,'finalrr');
+
+            finalre = finalre.substring(finalre.indexOf("rresp\",\"") + 8);
+            finalre = finalre.substring(0, finalre.indexOf("\""));
+
+            //console.log(finalre,'finalrer');
 
             var final_val = finalre;
 
@@ -192,12 +194,12 @@ const asString = Object.entries(mapd).map(x => `${encodeURIComponent(x[0])}=${en
         }
 
 
-    async function post(to,params){
-return new Promise(function (resolve, reject) {
+        async function post(to, params) {
+            return new Promise(function (resolve, reject) {
                 let xhr = new XMLHttpRequest();
-                xhr.open("POST", to,true);
+                xhr.open("POST", to, true);
 
-               //Send the proper header information along with the request
+                //Send the proper header information along with the request
                 xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
                 xhr.onload = function () {
                     if (this.status >= 200 && this.status < 300) {
@@ -221,7 +223,7 @@ return new Promise(function (resolve, reject) {
                 };
                 xhr.send(params);
             });
-}
+        }
 
     </script>
 
