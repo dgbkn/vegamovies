@@ -114,6 +114,8 @@
             obj.forEach(element => {
               try{
               var html = element.innerHTML;
+var snip = element.innerText.split("\n");
+console.log(JSON.stringify(snip));
               const parser = new DOMParser();
               var post = parser.parseFromString(html, "text/html");
 
