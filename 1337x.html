@@ -96,7 +96,7 @@
 
         document.getElementById("Loader").style = "";
 
-        makeRequest("GET", url).then(response => {
+        makeRequest("GET", getSearchurl(url)).then(response => {
 
           if (response.status == 200) {
             console.log(response.responseText);
