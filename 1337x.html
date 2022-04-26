@@ -115,14 +115,14 @@
               const parser = new DOMParser();
               var post = parser.parseFromString(html, "text/html");
 
-              var name = post.getElementsByTagName('a')[1].innerText;
+              var name = post.querySelector('td.coll-1.name').innerText;
               var href = post.getElementsByTagName('a')[1].href;
-              var seeds = post.getElementsByClassName('seeds')[0].innerText;
-              var size = parseFloat(post.getElementsByClassName('size')[0].innerText);
-              var GB = post.getElementsByClassName('size')[0].innerText.includes('GB') ? true : false;
-              var uploader = post.getElementsByClassName('uploader')[0].innerText;
-              var datae = post.getElementsByClassName('coll-date')[0].innerText;              
-              
+              var seeds = post.querySelector('td.coll-2.seeds').innerText;
+              var datae = post.querySelector('td.coll-date').innerText;
+              var uploader = post.querySelector('td:nth-child(6)').innerText;              
+              var size = post.querySelector('td:nth-child(5)').innerText;
+               var GB = size.innerText.includes('GB') ? true : false;
+               size = parseFloat(size);
               
               if(!GB || (GB && size <=  4)){
 
