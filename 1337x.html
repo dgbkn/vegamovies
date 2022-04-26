@@ -119,13 +119,14 @@ console.log(JSON.stringify(snip));
               const parser = new DOMParser();
               var post = parser.parseFromString(html, "text/html");
 
-              var name = post.getElementsByTagName('a')[1].innerText;
+              var name = snip[1];
               var href = post.getElementsByTagName('a')[1].href;
-              var seeds = post.getElementsByClassName('seeds')[0].innerText;
-              var size = parseFloat(post.getElementsByClassName('size')[0].innerText);
-              var GB = post.getElementsByClassName('size')[0].innerText.includes('GB') ? true : false;
-              var uploader = post.getElementsByClassName('uploader')[0].innerText;
-              var datae = post.getElementsByClassName('coll-date')[0].innerText;              
+              var seeds = snip[2];
+              var ssiss = snip[5].substring(0,snip[5].index of('B'));
+              var size = parseFloat(ssiss);
+              var GB = ssiss.includes('GB') ? true : false;
+              var uploader = snip[6];
+              var datae = snip[4];              
               
               
               if(!GB || (GB && size <=  4)){
