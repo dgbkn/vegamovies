@@ -2,7 +2,9 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
+
+
+ <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
   <meta http-equiv="x-ua-compatible" content="ie=edge" />
   <title>VegaMovies Site</title>
@@ -74,10 +76,9 @@
     }
 
     function getSearchurl(query) {
-      var tamilmc = `https://1337x.torrentdev.workers.dev/sort-search/${encodeURIComponent(query)}/time/desc/1/`;
-       return tamilmc;
-     // var selector = "tr";
-     // return `https://scrap.torrentdev.workers.dev/?url=${encodeURIComponent(tamilmc)}&selector=${encodeURIComponent(selector)}`;
+      var tamilmc = `https://1337x.to/sort-search/${encodeURIComponent(query)}/time/desc/1/`;
+      var selector = "tr";
+      return `https://scrap.torrentdev.workers.dev/?url=${encodeURIComponent(tamilmc)}&selector=${encodeURIComponent(selector)}`;
     }
     
 
@@ -102,36 +103,52 @@
           if (response.status == 200) {
             console.log(response.responseText);
 
-            var obj = response.responseText;
+            var obj = JSON.parse(response.responseText);
 
             console.log(obj);
 
-            const parser = new DOMParser();
-              var doc = parser.parseFromString(obj, "text/html");
+            obj = obj.result;
+            var res = ``;
 
 
-            
-          var tr = doc.getElementsByTagName("tr");
-
-          var a = doc.getElementsByTagName("a");
-
-      for (c = 0; c < tr.length; c++) {
-                          try{
+            obj.forEach(element => {
+              try{
+              var html = element.innerHTML;
               const parser = new DOMParser();
-              var post = parser.parseFromString(tr[c].innerHTML, "text/html");
-              console.log(tr[c].innerHTML);
+              var post = parser.parseFromString(html, "text/html");
 
-             var href = post.getElementsByTagName('a')[1].href;
-tr[c].innerHTML = `<div class="ty" onclick="loadEpisodes('${href}')">${tr[c].innerHTML}</div>`;
-}catch(e){
-console.log(e);
-}
+              var name = post.getElementsByTagName('a')[1].innerText;
+              var href = post.getElementsByTagName('a')[1].href;
+              var seeds = post.getElementsByClassName('seeds')[0].innerText;
+              var size = parseFloat(post.getElementsByClassName('size')[0].innerText);
+              var GB = post.getElementsByClassName('size')[0].innerText.includes('GB') ? true : false;
+              var uploader = post.getElementsByClassName('uploader')[0].innerText;
+              var datae = post.getElementsByClassName('coll-date')[0].innerText;              
+              
+              
+              if(!GB || (GB && size <=  4)){
 
-    }
+              res = res + `
+<div class="col-lg-3 col-md-6 col-sm-12 ">
+<div class="card">
+<div class="card-body">
+<h5 class="card-title">${name}</h5>
+ <p class="card-text">Size:${size}, Seeds:${seeds}, Date:${datae}, Uploader:${uploader}.</p>
+<button class="btn btn-primary" onclick="loadEpisodes('${href}')">OPEN</button>
+</div>
+</div>
+</div>
+`;
+              }
+              }
+              catch(e){
+              console.log(e,element)
+              }
+            });
 
 
             document.getElementById("Loader").style = "display:none!important";
-            document.getElementById('mainContent').innerHTML = "<table>" + doc.getElementsByTagName("table")[0].innerHTML + "</table>";
+            document.getElementById('mainContent').innerHTML = res;
 
 
           }
@@ -156,11 +173,11 @@ doSearch();
       document.getElementById('mainContent').innerHTML = ``;
       document.getElementById("Loader").style = "";
 
-      makeRequest("GET", `https://1337x.torrentdev.workers.dev/${url}`).then(response => {
+      makeRequest("GET", `https://scrap.torrentdev.workers.dev/?url=${"https://1337x.to/" + url}&selector=body`).then(response => {
         if (response.status == 200) {
           console.log(response.responseText);
 
-          var obj = response.responseText;
+          var obj = JSON.parse(response.responseText);
 
           console.log(obj);
 
