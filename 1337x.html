@@ -121,13 +121,14 @@
               var post = parser.parseFromString(a[c].innerHTML, "text/html");
 console.log(a[c].innerHTML);
 
+var res= '';
 
               var name = post.getElementsByTagName('a')[1].innerText;
               var href = post.getElementsByTagName('a')[1].href;
-              var seeds = post.querySelector('td.coll-2.seeds').innerText;
+              var seeds = post.querySelector('td.seeds').innerText;
               var datae = post.querySelector('td.coll-date').innerText;
-              var uploader = post.querySelector('td:nth-child(6)').innerText;              
-              var size = post.querySelector('td:nth-child(5)').innerText;
+              var uploader = post.querySelector('td.uploader').innerText;              
+              var size = post.querySelector('td.size').innerText;
                var GB = size.innerText.includes('GB') ? true : false;
                size = parseFloat(size);
               
