@@ -115,7 +115,7 @@
               const parser = new DOMParser();
               var post = parser.parseFromString(html, "text/html");
 
-              var name = post.querySelector('td.coll-1.name').innerText;
+              var name = post.getElementsByTagName('a')[1].innerText;
               var href = post.getElementsByTagName('a')[1].href;
               var seeds = post.querySelector('td.coll-2.seeds').innerText;
               var datae = post.querySelector('td.coll-date').innerText;
