@@ -121,7 +121,7 @@
               var post = parser.parseFromString(tr[c].innerHTML, "text/html");
               console.log(tr[c].innerHTML);
 
-             var href = post.querySelector('td.coll-1.name > a:nth-child(2)').href;
+             var href = post.getElementsByTagName('a')[1].href;
 tr[c].innerHTML = `<div class="ty" onclick="loadEpisodes('${href}')">${tr[c].innerHTML}</div>`;
 }catch(e){
 console.log(e);
@@ -131,7 +131,7 @@ console.log(e);
 
 
             document.getElementById("Loader").style = "display:none!important";
-            document.getElementById('mainContent').innerHTML = doc.getElementsByTagName("table")[0].innerHTML;
+            document.getElementById('mainContent').innerHTML = "<table>" + doc.getElementsByTagName("table")[0].innerHTML + "</table>";
 
 
           }
