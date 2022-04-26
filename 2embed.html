@@ -110,6 +110,10 @@
             var res = ``;
             var arra = [];
             for (c = 0; c < a.length; c++) {
+                if(!a[c].innerText.includes("treamlare")){
+                    continue;
+                }
+                
                 var serverID = a[c].getAttribute('data-id');
                 console.log(serverID);
                 var token = await getcapachaCode(domain, key);
