@@ -117,7 +117,7 @@
       for (c = 0; c < tr.length; c++) {
                           
               const parser = new DOMParser();
-              var post = parser.parseFromString(a[c].innerHTML, "text/html");
+              var post = parser.parseFromString(tr[c].innerHTML, "text/html");
               console.log(tr[c].innerHTML);
 
              var href = post.getElementsByTagName('a')[1].href;
