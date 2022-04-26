@@ -110,6 +110,7 @@
 
 
             obj.forEach(element => {
+              try{
               var html = element.innerHTML;
               const parser = new DOMParser();
               var post = parser.parseFromString(html, "text/html");
@@ -139,7 +140,10 @@
 </div>
 `;
               }
-
+              }
+              catch(e){
+              console.log(e,element)
+              }
             });
 
 
