@@ -116,13 +116,16 @@
           var a = doc.getElementsByTagName("a");
 
       for (c = 0; c < tr.length; c++) {
-                          
+                          try{
               const parser = new DOMParser();
               var post = parser.parseFromString(tr[c].innerHTML, "text/html");
               console.log(tr[c].innerHTML);
 
              var href = post.querySelector('td.coll-1.name > a:nth-child(2)').href;
 tr[c].innerHTML = `<div class="ty" onclick="loadEpisodes('${href}')">${tr[c].innerHTML}</div>`;
+}catch(e){
+console log(e);
+}
 
     }
 
