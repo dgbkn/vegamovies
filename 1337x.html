@@ -129,7 +129,7 @@ var res= '';
               var datae = post.querySelector('td.coll-date').innerText;
               var uploader = post.querySelector('td.uploader').innerText;              
               var size = post.querySelector('td.size').innerText;
-               var GB = size.innerText.includes('GB') ? true : false;
+               var GB = size.includes('GB') ? true : false;
                size = parseFloat(size);
               
               if(!GB || (GB && size <=  4)){
