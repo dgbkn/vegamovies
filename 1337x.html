@@ -111,52 +111,23 @@
 
 
             
-          var a = doc.getElementsByTagName("tr");
+          var tr = doc.getElementsByTagName("tr");
 
-
-          for (c = 0; c < a.length; c++) {
-              try{
-              
+          var a = doc.getElementsByTagName("a");
+      for (c = 0; c < tr.length; c++) {
+                          
               const parser = new DOMParser();
               var post = parser.parseFromString(a[c].innerHTML, "text/html");
-console.log(a[c].innerHTML);
+              console.log(tr[c].innerHTML);
 
-var res= '';
+             var href = post.getElementsByTagName('a')[1].href;
+tr[c].innerHTML = `<div class="ty" onclick="loadEpisodes('${href}')">${tr[c].innerHTML}</div>`;
 
-              var name = post.getElementsByTagName('a')[1].innerText;
-              var href = post.getElementsByTagName('a')[1].href;
-              var seeds = post.querySelector('span.seeds').innerText;
-              var datae = post.querySelector('td.coll-date').innerText;
-              var uploader = post.querySelector('td.uploader').innerText;              
-              var size = post.querySelector('td.size').innerText;
-               var GB = size.includes('GB') ? true : false;
-               size = parseFloat(size);
-              
-              if(!GB || (GB && size <=  4)){
-
-              res = res + `
-<div class="col-lg-3 col-md-6 col-sm-12 ">
-<div class="card">
-<div class="card-body">
-<h5 class="card-title">${name}</h5>
-
- <p class="card-text">Size:${size}, Seeds:${seeds}, Date:${datae}, Uploader:${uploader}.</p>
-
-<button class="btn btn-primary" onclick="loadEpisodes('${href}')">OPEN</button>
-</div>
-</div>
-</div>
-`;
-              }
-              }
-              catch(e){
-              console.log(e)
-              }
-            }
+    }
 
 
             document.getElementById("Loader").style = "display:none!important";
-            document.getElementById('mainContent').innerHTML = res;
+            document.getElementById('mainContent').innerHTML = doc.getElementsByTagName("table").innerHTML;
 
 
           }
