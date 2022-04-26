@@ -176,7 +176,7 @@ doSearch();
       document.getElementById('mainContent').innerHTML = ``;
       document.getElementById("Loader").style = "";
 
-      makeRequest("GET", `https://scrap.torrentdev.workers.dev/?url=${"https://1337x.to/" + url}&selector=body`).then(response => {
+      makeRequest("GET", `https://scrap.torrentdev.workers.dev/?url=${"https://1337x.to/" + url.replace('https://vegamovies.pages.dev/','')}&selector=body`).then(response => {
         if (response.status == 200) {
           console.log(response.responseText);
 
