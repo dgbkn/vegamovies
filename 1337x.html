@@ -115,7 +115,7 @@
               const parser = new DOMParser();
               var post = parser.parseFromString(html, "text/html");
 
-              var name = post.getElementsByClassName('name')[0].innerText;
+              var name = post.getElementsByTagName('a')[1].innerText;
               var href = post.getElementsByTagName('a')[1].href;
               var seeds = post.getElementsByClassName('seeds')[0].innerText;
               var size = parseFloat(post.getElementsByClassName('size')[0].innerText);
