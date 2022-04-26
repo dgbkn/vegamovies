@@ -74,9 +74,10 @@
     }
 
     function getSearchurl(query) {
-      var tamilmc = `https://1337x.to/sort-search/${encodeURIComponent(query)}/time/desc/1/`;
-      var selector = "tr";
-      return `https://scrap.torrentdev.workers.dev/?url=${encodeURIComponent(tamilmc)}&selector=${encodeURIComponent(selector)}`;
+      var tamilmc = `https://1337x.torrentdev.workers.dev/sort-search/${encodeURIComponent(query)}/time/desc/1/`;
+       return tamilmc;
+     // var selector = "tr";
+     // return `https://scrap.torrentdev.workers.dev/?url=${encodeURIComponent(tamilmc)}&selector=${encodeURIComponent(selector)}`;
     }
     
 
@@ -101,19 +102,25 @@
           if (response.status == 200) {
             console.log(response.responseText);
 
-            var obj = JSON.parse(response.responseText);
+            var obj = response.responseText;
 
             console.log(obj);
 
-            obj = obj.result;
-            var res = ``;
+            const parser = new DOMParser();
+              var doc = parser.parseFromString(obj, "text/html");
 
 
-            obj.forEach(element => {
+            
+          var a = doc.getElementsByTagName("tr");
+
+
+          for (c = 0; c < a.length; c++) {
               try{
-              var html = element.innerHTML;
+              
               const parser = new DOMParser();
-              var post = parser.parseFromString(html, "text/html");
+              var post = parser.parseFromString(a[c].innerHTML, "text/html");
+
+
 
               var name = post.getElementsByTagName('a')[1].innerText;
               var href = post.getElementsByTagName('a')[1].href;
@@ -144,7 +151,7 @@
               catch(e){
               console.log(e,element)
               }
-            });
+            }
 
 
             document.getElementById("Loader").style = "display:none!important";
@@ -173,11 +180,11 @@ doSearch();
       document.getElementById('mainContent').innerHTML = ``;
       document.getElementById("Loader").style = "";
 
-      makeRequest("GET", `https://scrap.torrentdev.workers.dev/?url=${"https://1337x.to/" + url}&selector=body`).then(response => {
+      makeRequest("GET", `https://1337x.torrentdev.workers.dev/${url}`).then(response => {
         if (response.status == 200) {
           console.log(response.responseText);
 
-          var obj = JSON.parse(response.responseText);
+          var obj = response.responseText;
 
           console.log(obj);
 
