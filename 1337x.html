@@ -127,7 +127,7 @@ tr[c].innerHTML = `<div class="ty" onclick="loadEpisodes('${href}')">${tr[c].inn
 
 
             document.getElementById("Loader").style = "display:none!important";
-            document.getElementById('mainContent').innerHTML = doc.getElementsByTagName("table").innerHTML;
+            document.getElementById('mainContent').innerHTML = doc.getElementsByTagName("table")[0].innerHTML;
 
 
           }
