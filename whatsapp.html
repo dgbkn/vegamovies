@@ -189,7 +189,7 @@
     function sendMsg() {
       if (document.getElementById("session_id").value && document.getElementById("sendTo").value && document.getElementById("msgData").value) {
 
-     if (document.getElementById("PDF")) {
+     if (document.getElementById("PDF").value) {
           var postd =
             [{
               receiver: document.getElementById("sendTo").value,
