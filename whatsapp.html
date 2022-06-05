@@ -40,7 +40,7 @@
     </div>
 
     <!-- Standard -->
-    <div class="btn-group" role="group" aria-label="Basic example">
+    <div class="" role="group" aria-label="Basic example">
       <button type="button" class="btn btn-primary" onclick="loadQr()">LOAD QR</button>
       <button type="button" class="btn btn-primary" onclick="sessionStat()">Session Status</button>
       <button type="button" class="btn btn-primary" onclick="showForm()">Send MSG</button>
@@ -64,6 +64,12 @@
         <label class="form-label" for="msgData">Message</label>
       </div>
 
+      <br>
+      <div class="form-outline">
+        <textarea class="form-control" id="PDF" rows="4"></textarea>
+        <label class="form-label" for="PDF">Pdf File URL</label>
+      </div>
+
       <button type="button" class="btn btn-primary" onclick="sendMsg()">Send Message</button>
 
     </div>
@@ -73,12 +79,12 @@
   <br><br>
 
 
-<div class="form-outline">
-  <textarea class="form-control" id="log" rows="4">
+  <div class="form-outline">
+    <textarea class="form-control" id="log" rows="4">
     ................
   </textarea>
-  <label class="form-label" for="log">LOG:</label>
-</div>
+    <label class="form-label" for="log">LOG:</label>
+  </div>
 
 
   <!-- MDB -->
@@ -182,13 +188,30 @@
 
     function sendMsg() {
       if (document.getElementById("session_id").value && document.getElementById("sendTo").value && document.getElementById("msgData").value) {
-        var postd =
-          [{
-            receiver: document.getElementById("sendTo").value,
-            message: {
-              text: document.getElementById("msgData").value
-            }
-          }];
+
+     if (document.getElementById("PDF")) {
+          var postd =
+            [{
+              receiver: document.getElementById("sendTo").value,
+              message: {
+                document: {
+                  url: document.getElementById("PDF")
+                },
+                mimetype: 'application/pdf',
+                fileName: 'PDFFILE.pdf',
+                text: document.getElementById("msgData").value
+              }
+            }];
+        }
+        else {
+          var postd =
+            [{
+              receiver: document.getElementById("sendTo").value,
+              message: {
+                text: document.getElementById("msgData").value
+              }
+            }];
+        }
 
         showLoading();
         var xhttp = new XMLHttpRequest();
