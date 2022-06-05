@@ -4,7 +4,7 @@
 <head>
 
 
- <meta charset="UTF-8" />
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
   <meta http-equiv="x-ua-compatible" content="ie=edge" />
   <title>VegaMovies Site</title>
@@ -18,7 +18,7 @@
   <link rel="stylesheet" href="https://vegamovies.pages.dev/css/mdb.min.css" />
 </head>
 
-<body>
+<body class="container">
 
 
   <div class="d-flex justify-content-center" id="Loader">
@@ -30,147 +30,55 @@
 
   <!-- Start your project here-->
   <div class="container row  w-auto" id="mainContent" style="margin: 10px;margin-top: 30px;">
-  <img id="qrxcode" >
-   
-   <div id="SHOWAFTERSESSION">
-    <!-- Pills navs -->
-<ul class="nav nav-pills nav-justified mb-3" id="ex1" role="tablist">
-  <li class="nav-item" role="presentation">
-    <a
-      class="nav-link active"
-      id="tab-login"
-      data-mdb-toggle="pill"
-      href="#pills-login"
-      role="tab"
-      aria-controls="pills-login"
-      aria-selected="true"
-      >Login</a
-    >
-  </li>
-  <li class="nav-item" role="presentation">
-    <a
-      class="nav-link"
-      id="tab-register"
-      data-mdb-toggle="pill"
-      href="#pills-register"
-      role="tab"
-      aria-controls="pills-register"
-      aria-selected="false"
-      >Register</a
-    >
-  </li>
-</ul>
-<!-- Pills navs -->
+    <img id="qrxcode" style="height: 200px;width: 200px;margin-bottom: 20px;" />
 
-<!-- Pills content -->
-<div class="tab-content">
-  <div class="tab-pane fade show active" id="pills-login" role="tabpanel" aria-labelledby="tab-login">
-    <form>
-      <div class="text-center mb-3">
-        <p>Sign in with:</p>
-        <button type="button" class="btn btn-primary btn-floating mx-1">
-          <i class="fab fa-facebook-f"></i>
-        </button>
 
-        <button type="button" class="btn btn-primary btn-floating mx-1">
-          <i class="fab fa-google"></i>
-        </button>
 
-        <button type="button" class="btn btn-primary btn-floating mx-1">
-          <i class="fab fa-twitter"></i>
-        </button>
+    <div class="form-outline mb-4">
+      <input type="text" id="session_id" class="form-control" onchange="initSess()" />
+      <label class="form-label" for="session_id">Session Name</label>
+    </div>
 
-        <button type="button" class="btn btn-primary btn-floating mx-1">
-          <i class="fab fa-github"></i>
-        </button>
+    <!-- Standard -->
+    <div class="btn-group" role="group" aria-label="Basic example">
+      <button type="button" class="btn btn-primary" onclick="loadQr()">LOAD QR</button>
+      <button type="button" class="btn btn-primary" onclick="sessionStat()">Session Status</button>
+      <button type="button" class="btn btn-primary" onclick="showForm()">Send MSG</button>
+    </div>
+
+
+    <br>
+    <br>
+
+    <br><br>
+
+    <div id="SHOWAFTERSESSION" style="display: none;">
+
+      <div class="form-outline">
+        <input type="text" id="sendTo" class="form-control" />
+        <label class="form-label" for="sendTo">Phone Number of recipent</label>
+      </div>
+      <br>
+      <div class="form-outline">
+        <textarea class="form-control" id="msgData" rows="4"></textarea>
+        <label class="form-label" for="msgData">Message</label>
       </div>
 
-      <p class="text-center">or:</p>
+      <button type="button" class="btn btn-primary" onclick="sendMsg()">Send Message</button>
 
-      <!-- Email input -->
-      <div class="form-outline mb-4">
-        <input type="email" id="loginName" class="form-control" />
-        <label class="form-label" for="loginName">Email or username</label>
-      </div>
-
-      <!-- Password input -->
-      <div class="form-outline mb-4">
-        <input type="password" id="loginPassword" class="form-control" />
-        <label class="form-label" for="loginPassword">Password</label>
-      </div>
-
-      <!-- 2 column grid layout -->
-      <div class="row mb-4">
-        <div class="col-md-6 d-flex justify-content-center">
-          <!-- Checkbox -->
-          <div class="form-check mb-3 mb-md-0">
-            <input class="form-check-input" type="checkbox" value="" id="loginCheck" checked />
-            <label class="form-check-label" for="loginCheck"> Remember me </label>
-          </div>
-        </div>
-
-        <div class="col-md-6 d-flex justify-content-center">
-          <!-- Simple link -->
-          <a href="#!">Forgot password?</a>
-        </div>
-      </div>
-
-      <!-- Submit button -->
-      <button type="submit" class="btn btn-primary btn-block mb-4">Sign in</button>
-
-      <!-- Register buttons -->
-      <div class="text-center">
-        <p>Not a member? <a href="#!">Register</a></p>
-      </div>
-    </form>
+    </div>
   </div>
-  <div class="tab-pane fade" id="pills-register" role="tabpanel" aria-labelledby="tab-register">
-    <form>
-      <div class="text-center mb-3">
-        <p>Sign up with:</p>
-        <button type="button" class="btn btn-primary btn-floating mx-1">
-          <i class="fab fa-facebook-f"></i>
-        </button>
-
-        <button type="button" class="btn btn-primary btn-floating mx-1">
-          <i class="fab fa-google"></i>
-        </button>
-
-        <button type="button" class="btn btn-primary btn-floating mx-1">
-          <i class="fab fa-twitter"></i>
-        </button>
-
-        <button type="button" class="btn btn-primary btn-floating mx-1">
-          <i class="fab fa-github"></i>
-        </button>
-      </div>
-
-      <p class="text-center">or:</p>
-
-      <!-- Name input -->
-      <div class="form-outline mb-4">
-        <input type="text" id="registerName" class="form-control" />
-        <label class="form-label" for="registerName">Name</label>
-      </div>
-
-      <!-- Username input -->
-      <div class="form-outline mb-4">
-        <input type="text" id="registerUsername" class="form-control" />
-        <label class="form-label" for="registerUsername">Username</label>
-      </div>
-
-      <!-- Email input -->
-      <div class="form-outline mb-4">
-        <input type="email" id="registerEmail" class="form-control" />
-        <label class="form-label" for="registerEmail">Email</label>
-      </div>
-
-      <!-- Password input
-   </div>
-  </div>
-  <!-- End your project here-->
 
 
+  <br><br>
+
+
+<div class="form-outline">
+  <textarea class="form-control" id="log" rows="4">
+    ................
+  </textarea>
+  <label class="form-label" for="log">LOG:</label>
+</div>
 
 
   <!-- MDB -->
@@ -207,27 +115,142 @@
       });
     }
 
+    function hideLoading() {
+      document.getElementById("Loader").style = "display:none!important;";
+    }
+
+
+    function showLoading() {
+      document.getElementById("Loader").style = "";
+    }
+
+    function showForm() {
+      document.getElementById("SHOWAFTERSESSION").style = "";
+    }
+
 
   </script>
   <!-- Custom scripts -->
   <script type="text/javascript">
 
-function loadDoc() {
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      var res= JSON.parse(this.responseText);
-      document.getElementById("qrxcode").src = res.data.qr;
+    var BASE_API_URL = "https://baileys-api-whatsapp-production.up.railway.app";
+
+    hideLoading();
+
+
+    function initSess() {
+      // showForm();
     }
-  };
-  //xhttp.open("POST", "https://wapp.gololhk.repl.co/sessions/add", true);
-xhttp.open("POST", "https://baileys-api-whatsapp-production.up.railway.app/sessions/add", true);
 
-  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-  xhttp.send("id=baji&isLegacy=false");
-}
 
-loadDoc();
+    function sessionStat() {
+      if (document.getElementById("session_id").value) {
+        showLoading();
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+          document.getElementById("log").value = this.responseText;
+          hideLoading();
+        };
+        xhttp.open("GET", `${BASE_API_URL}/sessions/status/${document.getElementById("session_id").value}`, true);
+        xhttp.send();
+      }
+    }
+
+
+    function loadQr() {
+      if (document.getElementById("session_id").value) {
+        showLoading();
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+          document.getElementById("log").value = this.responseText;
+          var res = JSON.parse(this.responseText);
+          document.getElementById("qrxcode").src = res.data.qr;
+
+          setTimeout(() => {
+            document.getElementById("qrxcode").src = "";
+          }, 20000);
+
+
+          hideLoading();
+        };
+        xhttp.open("POST", `${BASE_API_URL}/sessions/add`, true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send("id=" + document.getElementById("session_id").value + "&isLegacy=false");
+      }
+    }
+
+
+    function sendMsg() {
+      if (document.getElementById("session_id").value && document.getElementById("sendTo").value && document.getElementById("msgData").value) {
+        var postd =
+          [{
+            receiver: document.getElementById("sendTo").value,
+            message: {
+              text: document.getElementById("msgData").value
+            }
+          }];
+
+        showLoading();
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+          document.getElementById("log").value = this.responseText;
+          var res = JSON.parse(this.responseText);
+          // document.getElementById("qrxcode").src = res.data.qr;
+          hideLoading();
+        };
+        xhttp.open("POST", `${BASE_API_URL}/chats/send-bulk?id=${document.getElementById("session_id").value}`, true);
+        xhttp.setRequestHeader("Content-type", "application/json");
+        xhttp.send(JSON.stringify(postd));
+      }
+    }
+
+
+
+
+
+
+
+//     // Send text message
+// {
+//     receiver: '628231xxxxx',
+//     message: {
+//         text: 'Hello there!'
+//     }
+// }
+
+// // Send image
+// {
+//     receiver: '628231xxxxx',
+//     message: {
+//         image: {
+//             url: 'https://example.com/logo.png'
+//         },
+//         caption: 'My logo'
+//     }
+// }
+
+// // Send video
+// {
+//     receiver: '628231xxxxx',
+//     message: {
+//         video: {
+//             url: 'https://example.com/intro.mp4'
+//         },
+//         caption: 'My intro'
+//     }
+// }
+
+// // Send document
+// {
+//     receiver: '628231xxxxx',
+//     message: {
+//         document: {
+//             url: 'https://example.com/presentation.pdf'
+//         },
+//         mimetype: 'application/pdf',
+//         fileName: 'presentation-1.pdf'
+//     }
+// }
 
   </script>
 </body>
