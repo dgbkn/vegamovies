@@ -462,9 +462,9 @@ var bypassedLink= pre;
         var shoted = response.responseText;
         console.log("Shorted URL:" + shoted);
         if (!shoted.includes("vegacloud")) {
-          loadVegaView(shoted,bypassedLink);
+          loadVegaView(url,bypassedLink);
         } else {
-          loadVegaViewNested(url,bypassedLink);
+          loadVegaViewNested(shoted,bypassedLink);
         }
       });
       
