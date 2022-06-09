@@ -352,11 +352,20 @@
       document.getElementById('mainContent').innerHTML = ``;
       document.getElementById("Loader").style = "";
 
+
+if(localStorage.getItem(uri)){
+    pre = localStorage.getItem(uri);
+}
+
 if(!pre){
       socket.emit('bypassVega', uri);
       socket.on("html", (bypassedLink) => {
         console.log("BYPASSED LINK: " + bypassedLink);
-        document.getElementById("Loader").style = "color:red";
+       
+      
+      localStorage.setItem(uri,bypassedLink);
+      
+       document.getElementById("Loader").style = "color:red";
 
 
         makeRequest("GET", `https://scrap.torrentdev.workers.dev/?url=${bypassedLink}&selector=div.entry-content.clear`).then(response => {
@@ -385,7 +394,7 @@ if(!pre){
             var a = doc.getElementsByTagName("a");
 
             for (c = 0; c < a.length; c++) {
-              if (a[c].href.includes("vegaview")) {
+              if (a[c].innerHTML.includes("loud")) {
                 a[c].target = "";
                 a[c].href = "javascript:loadVegaView('" + a[c].href + "','"+bypassedLink+"');";
               }
@@ -426,7 +435,7 @@ var bypassedLink= pre;
             var a = doc.getElementsByTagName("a");
 
             for (c = 0; c < a.length; c++) {
-              if (a[c].href.includes("vegaview")) {
+              if (a[c].innerHTML.includes("loud")) {
                 a[c].target = "";
                 a[c].href = "javascript:loadVegaView('" + a[c].href + "','"+bypassedLink+"');";
               }
@@ -471,8 +480,8 @@ var bypassedLink= pre;
     function loadVegaViewNested(shoted,bypassedLink){
 
       document.getElementById("Loader").style = "display:none!important";
-      var res = "<br><button class='btn btn-primary' onClick="loadURL('','"+bypassedLink+"')">Go Back</button><br><br>";
-var res = "<br><button class='btn btn-primary' onClick='initAgain()'>Go To Home</button><br><br>";
+      var res = `<br><button class='btn btn-primary' onClick="loadURL('','${bypassedLink }')">Go Back</button><br><br>`;
+res = res + "<br><button class='btn btn-primary' onClick='initAgain()'>Go To Home</button><br><br>";
 
        res = res +  "<a class='btn btn-primary' href='"+shoted+"'>Open Link</button>";
 
