@@ -61,7 +61,7 @@
 
 
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.1/socket.io.js" ></script>  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.1/socket.io.js"></script>
 
   <!-- MDB -->
   <script type="text/javascript" src="https://vegamovies.pages.dev/js/mdb.min.js"></script>
@@ -203,6 +203,9 @@
 
     function doSearch() {
 
+      document.getElementById('mainContent').style.backgroundColor = "";
+      document.getElementById('mainContent').style.color = "";
+
       if (document.getElementById('form1').value) {
 
         document.getElementById('mainContent').innerHTML = ``;
@@ -269,6 +272,7 @@
 
 
 
+    var socket = io("https://bypassvega.herokuapp.com/");
 
 
 
@@ -307,12 +311,12 @@
             a[c].style.height = "auto";
           }
 
-          // var a = doc.getElementsByTagName("a");
+          var a = doc.getElementsByTagName("a");
 
-          // for (c = 0; c < a.length; c++) {
-          //   a[c].target = "";
-          //   a[c].href = "javascript:loadURL('" + a[c].href + "');";
-          // }
+          for (c = 0; c < a.length; c++) {
+            a[c].target = "";
+            a[c].href = "javascript:loadURL('" + a[c].href + "');";
+          }
 
           doc.documentElement.style.width = "100%";
 
@@ -341,10 +345,150 @@
     }
 
 
-        var socket = io();
-
-    
     function loadURL(uri) {
+      document.getElementById('mainContent').style.backgroundColor = "";
+      document.getElementById('mainContent').style.color = "";
+
+      document.getElementById('mainContent').innerHTML = ``;
+      document.getElementById("Loader").style = "";
+
+      socket.emit('bypassVega', uri);
+      socket.on("html", (bypassedLink) => {
+        console.log("BYPASSED LINK: " + bypassedLink);
+        document.getElementById("Loader").style = "color:red";
+
+
+        makeRequest("GET", `https://scrap.torrentdev.workers.dev/?url=${bypassedLink}&selector=div.entry-content.clear`).then(response => {
+          if (response.status == 200) {
+            console.log(response.responseText);
+            var obj = JSON.parse(response.responseText);
+            console.log(obj);
+
+            document.getElementById("Loader").style = "display:none!important";
+            var res = "<button class='btn btn-primary' onClick='initAgain()'>Go Back</button>";
+
+            obj = obj.result[0].innerHTML;
+
+            const parser = new DOMParser();
+            var doc = parser.parseFromString(obj, "text/html");
+
+
+            var a = doc.getElementsByTagName("img");
+
+            for (c = 0; c < a.length; c++) {
+              a[c].style.maxWidth = "100%";
+              a[c].style.height = "auto";
+            }
+
+
+            var a = doc.getElementsByTagName("a");
+
+            for (c = 0; c < a.length; c++) {
+              if (a[c].href.includes("vegaview")) {
+                a[c].target = "";
+                a[c].href = "javascript:loadVegaView('" + a[c].href + "');";
+              }
+            }
+
+            document.getElementById('mainContent').appendChild(doc.documentElement);
+
+          }
+        });
+
+
+      });
+
+
+    }
+
+
+
+    function loadVegaView(url) {
+      document.getElementById('mainContent').innerHTML = ``;
+      document.getElementById("Loader").style = "";
+
+
+      makeRequest("GET", `https://unshortenit-production.up.railway.app/unshorten?url=` + encodeURIComponent(url)).then(response => {
+        var shoted = response.responseText;
+        console.log("Shorted URL:" + shoted);
+        if (!shoted.includes("vegacloud")) {
+          loadVegaView(url);
+        } else {
+          loadVegaViewNested(url);
+        }
+      });
+      
+
+
+
+
+
+
+    }
+
+
+    function loadVegaViewNested(shoted){
+
+      document.getElementById("Loader").style = "display:none!important";
+      var res = "<br><button class='btn btn-primary' onClick='initAgain()'>Go Back</button><br><br>";
+       res = res +  "<a class='btn btn-primary' href='"+shoted+"'>Open Link</button>";
+
+
+        
+        document.getElementById("Loader").style = "display:none!important";
+            document.getElementById('mainContent').innerHTML = res;
+
+      // makeRequest("GET", `https://corsdev.up.railway.app/${shoted}`).then(response => {
+      //       var obj = response.responseText;
+      //       console.log(obj);
+
+      //       document.getElementById("Loader").style = "display:none!important";
+      //       var res = "<button class='btn btn-primary' onClick='initAgain()'>Go Back</button>";
+
+      //       const parser = new DOMParser();
+      //       var doc = parser.parseFromString(obj, "text/html");
+
+      //       var form = doc.getElementsByTagName('form')[0];
+      //       var form_act = form.action.split("?")[1];
+      //       var token = doc.querySelector("div.card-body:nth-child(4) > h2:nth-child(1) > form:nth-child(2) > input:nth-child(1)").value;
+
+
+      //       fetch("https://corsdev.up.railway.app/" + shoted + "?" + form_act, {
+      //         method: 'POST',
+      //         headers: {
+      //           'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:101.0) Gecko/20100101 Firefox/101.0',
+      //           'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+      //           'Accept-Language': 'en-US,en;q=0.5',
+      //           'Accept-Encoding': 'gzip, deflate, br',
+      //           'Origin': 'https://vegacloud.link',
+      //           'Alt-Used': 'vegacloud.link',
+      //           'Connection': 'keep-alive',
+      //           'Referer': shoted,
+      //           'Cookie': 'PHPSESSID=1cn71r49h1u8vuihut68d4nf48; __cf_bm=5f4V1Ixl8oaXZi.cxzst8qF8IFTEBnzpqQKOZgZCuDg-1654767876-0-AbmLDIpCcx6IKkQQoIhlMSzILsrnFi7vq+QbT76Z60eKTA3thsD4cEsg2pjCqzUo6MxJ8qjOaSb+pdNzNPnqCtKbLkY7FHKLPqA6yVJJzRDcxAIKZ+sX21N1lgAtv8eWDg==',
+      //           'Upgrade-Insecure-Requests': '1',
+      //           'Sec-Fetch-Dest': 'document',
+      //           'Sec-Fetch-Mode': 'navigate',
+      //           'Sec-Fetch-Site': 'same-origin',
+      //           'Sec-Fetch-User': '?1'
+      //         },
+      //         body: new URLSearchParams({
+      //           'token': token
+      //         })
+      //       }).then(response => response.text())
+      //         .then(final_data => {
+      //           console.log(final_data);
+
+      //         })
+      //         .catch(err => console.error('AAAW 👻', err));
+
+
+      //       // doc.getElementsByTagName('form')[0].action = shoted + "?" + form_act;
+      //       // document.getElementById('mainContent').appendChild(doc.documentElement);
+
+      //     });
+    }
+
+    function loadURL_old(uri) {
 
       makeRequest("GET", `https://scrap.torrentdev.workers.dev/?url=${encodeURIComponent(uri)}&selector=body`).then(response => {
 
@@ -384,7 +528,7 @@
 
 
           console.log(param);
-            var form = doc.getElementById('landing');
+          var form = doc.getElementById('landing');
 
           var post_url = form.action;
 
