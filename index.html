@@ -345,13 +345,14 @@
     }
 
 
-    function loadURL(uri) {
+    function loadURL(uri,pre=false) {
       document.getElementById('mainContent').style.backgroundColor = "";
       document.getElementById('mainContent').style.color = "";
 
       document.getElementById('mainContent').innerHTML = ``;
       document.getElementById("Loader").style = "";
 
+if(!pre){
       socket.emit('bypassVega', uri);
       socket.on("html", (bypassedLink) => {
         console.log("BYPASSED LINK: " + bypassedLink);
@@ -386,7 +387,7 @@
             for (c = 0; c < a.length; c++) {
               if (a[c].href.includes("vegaview")) {
                 a[c].target = "";
-                a[c].href = "javascript:loadVegaView('" + a[c].href + "');";
+                a[c].href = "javascript:loadVegaView('" + a[c].href + "','"+bypassedLink+"');";
               }
             }
 
@@ -397,13 +398,53 @@
 
 
       });
+}else{
+var bypassedLink= pre;
+        makeRequest("GET", `https://scrap.torrentdev.workers.dev/?url=${bypassedLink}&selector=div.entry-content.clear`).then(response => {
+          if (response.status == 200) {
+            console.log(response.responseText);
+            var obj = JSON.parse(response.responseText);
+            console.log(obj);
+
+            document.getElementById("Loader").style = "display:none!important";
+            var res = "<button class='btn btn-primary' onClick='initAgain()'>Go Back</button>";
+
+            obj = obj.result[0].innerHTML;
+
+            const parser = new DOMParser();
+            var doc = parser.parseFromString(obj, "text/html");
+
+
+            var a = doc.getElementsByTagName("img");
+
+            for (c = 0; c < a.length; c++) {
+              a[c].style.maxWidth = "100%";
+              a[c].style.height = "auto";
+            }
+
+
+            var a = doc.getElementsByTagName("a");
+
+            for (c = 0; c < a.length; c++) {
+              if (a[c].href.includes("vegaview")) {
+                a[c].target = "";
+                a[c].href = "javascript:loadVegaView('" + a[c].href + "','"+bypassedLink+"');";
+              }
+            }
+
+            document.getElementById('mainContent').appendChild(doc.documentElement);
+
+          }
+        });
+
+}
 
 
     }
 
 
 
-    function loadVegaView(url) {
+    function loadVegaView(url,bypassedLink) {
       document.getElementById('mainContent').innerHTML = ``;
       document.getElementById("Loader").style = "";
 
@@ -412,9 +453,9 @@
         var shoted = response.responseText;
         console.log("Shorted URL:" + shoted);
         if (!shoted.includes("vegacloud")) {
-          loadVegaView(url);
+          loadVegaView(url,bypassedLink);
         } else {
-          loadVegaViewNested(url);
+          loadVegaViewNested(url,bypassedLink);
         }
       });
       
@@ -427,10 +468,12 @@
     }
 
 
-    function loadVegaViewNested(shoted){
+    function loadVegaViewNested(shoted,bypassedLink){
 
       document.getElementById("Loader").style = "display:none!important";
-      var res = "<br><button class='btn btn-primary' onClick='initAgain()'>Go Back</button><br><br>";
+      var res = "<br><button class='btn btn-primary' onClick="loadURL('','"+bypassedLink+"')">Go Back</button><br><br>";
+var res = "<br><button class='btn btn-primary' onClick='initAgain()'>Go To Home</button><br><br>";
+
        res = res +  "<a class='btn btn-primary' href='"+shoted+"'>Open Link</button>";
 
 
