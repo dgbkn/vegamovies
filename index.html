@@ -111,7 +111,7 @@
 
 
     function getSearchurl(query) {
-      var tamilmc = `https://vegamovies.nl/?s=${query}`;
+      var tamilmc = `https://vegamovies.run/?s=${query}`;
 
       // var selector = "#elSearch_main > div > ol";
       var selector = "div.post-item-wrap";
@@ -119,7 +119,7 @@
       return `https://scrap.torrentdev.workers.dev/?url=${encodeURIComponent(tamilmc)}&selector=${encodeURIComponent(selector)}`;
     }
 
-    var latestPosts = "https://scrap.torrentdev.workers.dev/?url=vegamovies.nl&selector=body";
+    var latestPosts = "https://scrap.torrentdev.workers.dev/?url=vegamovies.run&selector=body";
 
 
   </script>
